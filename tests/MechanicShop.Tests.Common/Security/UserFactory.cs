@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Infrastructure.Identity;
+using MechanicShop.Api.Infrastructure.Identity;
 
 namespace MechanicShop.Tests.Common.Security;
 
@@ -11,7 +11,7 @@ internal class UserFactory
             Id = "19a59129-6c20-417a-834d-11a208d32d96",
             Email = "user@localhost",
             UserName = "user@localhost",
-            EmailConfirmed = true
+            EmailConfirmed = true,
         };
     }
 }

@@ -1,6 +1,7 @@
 using MechanicShop.Api.Domain.Workorders.Billing;
-using MechanicShop.Tests.Common;
 using MechanicShop.Tests.Common.Billing;
+
+using Microsoft.Extensions.Time.Testing;
 
 using Xunit;
 
@@ -15,7 +16,7 @@ public class InvoiceTests
         var workOrderId = Guid.NewGuid();
         var items = new List<InvoiceLineItem>
         {
-            InvoiceLineItem.Create(Guid.NewGuid(), 1, "Oil Change", 2, 50).Value
+            InvoiceLineItem.Create(Guid.NewGuid(), 1, "Oil Change", 2, 50).Value,
         };
         var time = new FakeTimeProvider();
         time.SetUtcNow(DateTimeOffset.Parse("2024-01-01T00:00:00Z"));

@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Infrastructure.Identity;
+using MechanicShop.Api.Infrastructure.Identity;
 
 namespace MechanicShop.Tests.Common.Security;
 
@@ -9,7 +9,7 @@ public static class TestUsers
         Id = "19a59129-6c20-417a-834d-11a208d32d96",
         Email = "pm@localhost",
         UserName = "pm@localhost",
-        EmailConfirmed = true
+        EmailConfirmed = true,
     };
 
     public static AppUser Labor01 => new()
@@ -17,7 +17,7 @@ public static class TestUsers
         Id = "b6327240-0aea-46fc-863a-777fc4e42560",
         Email = "john.labor@localhost",
         UserName = "john.labor@localhost",
-        EmailConfirmed = true
+        EmailConfirmed = true,
     };
 
     public static AppUser Labor02 => new()
@@ -25,7 +25,7 @@ public static class TestUsers
         Id = "8104ab20-26c2-4651-b1de-c0baf04dbbd9",
         Email = "peter.labor@localhost",
         UserName = "peter.labor@localhost",
-        EmailConfirmed = true
+        EmailConfirmed = true,
     };
 
     public static AppUser Labor03 => new()
@@ -33,7 +33,7 @@ public static class TestUsers
         Id = "e17c83de-1089-4f19-bf79-5f789133d37f",
         Email = "kevin.labor@localhost",
         UserName = "kevin.labor@localhost",
-        EmailConfirmed = true
+        EmailConfirmed = true,
     };
 
     public static AppUser Labor04 => new()
@@ -41,6 +41,6 @@ public static class TestUsers
         Id = "54cd01ba-b9ae-4c14-bab6-f3df0219ba4c",
         Email = "suzan.labor@localhost",
         UserName = "suzan.labor@localhost",
-        EmailConfirmed = true
+        EmailConfirmed = true,
     };
 }
