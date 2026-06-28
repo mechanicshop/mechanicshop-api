@@ -4,7 +4,6 @@ using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.DTOs.Requests.Customers;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.Customers.Commands.UpdateCustomer;
 using MechanicShop.Api.Features.Customers.Dtos;
 
 using MediatR;

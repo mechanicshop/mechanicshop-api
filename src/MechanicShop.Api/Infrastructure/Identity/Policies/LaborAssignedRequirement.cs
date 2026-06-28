@@ -4,7 +4,6 @@ using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Domain.Identity;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace MechanicShop.Api.Infrastructure.Identity.Policies;

@@ -6,7 +6,6 @@ using MechanicShop.Api.Features.Billing.Mappers;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.Billing.Queries.GetInvoiceById;
 

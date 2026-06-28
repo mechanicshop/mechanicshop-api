@@ -1,10 +1,9 @@
-﻿using MechanicShop.Api.Common.Interfaces;
+using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Domain.Workorders.Events;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.WorkOrders.EventHandlers;
 

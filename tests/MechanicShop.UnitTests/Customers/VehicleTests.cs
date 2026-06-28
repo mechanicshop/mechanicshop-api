@@ -1,4 +1,4 @@
-﻿using MechanicShop.Tests.Common.Customers;
+using MechanicShop.Tests.Common.Customers;
 
 using Xunit;
 

@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Common.Results;
+using MechanicShop.Api.Domain.Common.Results;
 using MechanicShop.Api.Domain.RepairTasks.Parts;
 using MechanicShop.Tests.Common.RepaireTasks;
 

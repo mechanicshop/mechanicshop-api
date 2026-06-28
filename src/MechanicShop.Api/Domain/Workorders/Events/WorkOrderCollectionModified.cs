@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Common;
+using MechanicShop.Api.Domain.Common;
 
 namespace MechanicShop.Api.Domain.Workorders.Events;
 

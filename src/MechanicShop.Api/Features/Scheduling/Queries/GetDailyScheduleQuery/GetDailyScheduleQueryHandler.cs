@@ -41,7 +41,7 @@ public class GetDailyScheduleQueryHandler(
         {
             OnDate = query.ScheduleDate,
             EndOfDay = localEnd < now,
-            Spots = []
+            Spots = [],
         };
 
         foreach (var spot in Enum.GetValues<Spot>())
@@ -80,7 +80,7 @@ public class GetDailyScheduleQueryHandler(
                             RepairTasks = [.. wo.RepairTasks.ToList().ConvertAll(rt => rt.ToDto())],
                             WorkOrderLocked = !wo.IsEditable,
                             State = wo.State,
-                            IsAvailable = false
+                            IsAvailable = false,
                         });
                     }
                 }
@@ -92,7 +92,7 @@ public class GetDailyScheduleQueryHandler(
                         StartAt = startUtc,
                         EndAt = endUtc,
                         WorkOrderLocked = false,
-                        IsAvailable = current >= now
+                        IsAvailable = current >= now,
                     });
                 }
 
@@ -102,7 +102,7 @@ public class GetDailyScheduleQueryHandler(
             result.Spots.Add(new SpotDto
             {
                 Spot = spot,
-                Slots = slots
+                Slots = slots,
             });
         }
 

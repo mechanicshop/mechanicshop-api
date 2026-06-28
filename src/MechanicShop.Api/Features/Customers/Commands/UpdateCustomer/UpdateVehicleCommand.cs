@@ -1,5 +1,4 @@
-﻿using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Features.Customers.Dtos;
+using MechanicShop.Api.Domain.Common.Results;
 
 using MediatR;
 

@@ -1,4 +1,4 @@
-﻿namespace MechanicShop.Api.Features.Billing.Dtos;
+namespace MechanicShop.Api.Features.Billing.Dtos;
 
 public record InvoiceLineItemDto
 {

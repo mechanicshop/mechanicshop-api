@@ -7,7 +7,6 @@ using MechanicShop.Api.Features.RepairTasks.Mappers;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.RepairTasks.Queries.GetRepairTaskById;
 

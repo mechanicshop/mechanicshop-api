@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Common.Results;
+using MechanicShop.Api.Domain.Common.Results;
 using MechanicShop.Api.Domain.Customers;
 using MechanicShop.Api.Domain.Customers.Vehicles;
 

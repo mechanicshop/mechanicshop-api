@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Common.Results;
+using MechanicShop.Api.Domain.Common.Results;
 using MechanicShop.Api.Domain.Identity;
 
 namespace MechanicShop.Tests.Common.Auth;

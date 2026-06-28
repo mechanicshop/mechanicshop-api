@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Employees;
+using MechanicShop.Api.Domain.Employees;
 using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Tests.Common.Employees;
 

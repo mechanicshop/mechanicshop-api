@@ -3,8 +3,6 @@ using MechanicShop.Api.Domain.Common.Results;
 
 using MediatR;
 
-using Microsoft.Extensions.Logging;
-
 namespace MechanicShop.Api.Features.Identity.Queries.GenerateTokens;
 
 public class GenerateTokenQueryHandler(ILogger<GenerateTokenQueryHandler> logger, IIdentityService identityService, ITokenProvider tokenProvider)

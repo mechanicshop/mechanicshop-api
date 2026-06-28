@@ -1,13 +1,11 @@
 using MechanicShop.Api.Common.Errors;
 using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.Employees;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.WorkOrders.Commands.AssignLabor;
 

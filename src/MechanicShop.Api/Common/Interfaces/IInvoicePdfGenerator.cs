@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Workorders.Billing;
+using MechanicShop.Api.Domain.Workorders.Billing;
 
 namespace MechanicShop.Api.Common.Interfaces;
 

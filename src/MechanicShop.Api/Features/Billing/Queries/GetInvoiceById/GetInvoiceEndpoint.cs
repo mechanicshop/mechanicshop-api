@@ -3,7 +3,6 @@ using Asp.Versioning.Builder;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
 using MechanicShop.Api.Features.Billing.Dtos;
-using MechanicShop.Api.Features.Billing.Queries.GetInvoiceById;
 
 using MediatR;
 

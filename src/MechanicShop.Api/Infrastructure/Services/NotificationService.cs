@@ -1,6 +1,4 @@
-﻿using MechanicShop.Api.Common.Interfaces;
-
-using Microsoft.Extensions.Logging;
+using MechanicShop.Api.Common.Interfaces;
 
 namespace MechanicShop.Api.Infrastructure.Services;
 

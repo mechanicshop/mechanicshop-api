@@ -41,7 +41,7 @@ public static class ProblemExtensions
 
         var problemDetails = new ValidationProblemDetails(errorsDict)
         {
-            Status = StatusCodes.Status400BadRequest
+            Status = StatusCodes.Status400BadRequest,
         };
 
         return Results.Json(problemDetails, statusCode: StatusCodes.Status400BadRequest);

@@ -1,10 +1,8 @@
 using MechanicShop.Api.Common.Interfaces;
-using MechanicShop.Api.Domain.Common.Results.Abstractions;
 
 using MediatR;
 
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Logging;
 
 using IResult = MechanicShop.Api.Domain.Common.Results.Abstractions.IResult;
 
@@ -33,7 +31,7 @@ public class CachingBehavior<TRequest, TResponse>(
             _ => new ValueTask<TResponse>((TResponse)(object)null!),
             new HybridCacheEntryOptions
             {
-                Flags = HybridCacheEntryFlags.DisableUnderlyingData
+                Flags = HybridCacheEntryFlags.DisableUnderlyingData,
             },
             cancellationToken: ct);
 
@@ -50,7 +48,7 @@ public class CachingBehavior<TRequest, TResponse>(
                     result,
                     new HybridCacheEntryOptions
                     {
-                        Expiration = cachedRequest.Expiration
+                        Expiration = cachedRequest.Expiration,
                     },
                     cachedRequest.Tags,
                     ct);

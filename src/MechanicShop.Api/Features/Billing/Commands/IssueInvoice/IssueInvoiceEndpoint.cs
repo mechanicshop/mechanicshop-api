@@ -2,7 +2,6 @@ using Asp.Versioning.Builder;
 
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.Billing.Commands.IssueInvoice;
 using MechanicShop.Api.Features.Billing.Dtos;
 
 using MediatR;

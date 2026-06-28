@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Customers;
+using MechanicShop.Api.Domain.Customers;
 using MechanicShop.Api.Domain.Customers.Vehicles;
 using MechanicShop.Api.Features.Customers.Dtos;
 
@@ -16,7 +16,7 @@ public static class CustomerMapper
             Name = entity.Name!,
             Email = entity.Email!,
             PhoneNumber = entity.PhoneNumber!,
-            Vehicles = entity.Vehicles?.Select(v => v.ToDto()).ToList() ?? []
+            Vehicles = entity.Vehicles?.Select(v => v.ToDto()).ToList() ?? [],
         };
     }
 

@@ -1,9 +1,9 @@
 using Asp.Versioning.Builder;
 
 using MechanicShop.Api.DTOs.Requests.Customers;
-using MechanicShop.Api.Features.Customers.Dtos;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
+using MechanicShop.Api.Features.Customers.Dtos;
 
 using MediatR;
 

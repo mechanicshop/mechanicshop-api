@@ -3,7 +3,6 @@ using Asp.Versioning.Builder;
 using MechanicShop.Api.DTOs.Requests.WorkOrders;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.WorkOrders.Commands.AssignLabor;
 
 using MediatR;
 

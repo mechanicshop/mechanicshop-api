@@ -4,7 +4,6 @@ using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.DTOs.Requests.RepairTasks;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.RepairTasks.Commands.UpdateRepairTask;
 using MechanicShop.Api.Features.RepairTasks.Dtos;
 
 using MediatR;

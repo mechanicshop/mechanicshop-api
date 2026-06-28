@@ -7,7 +7,6 @@ using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.RepairTasks.Commands.RemoveRepairTask;
 

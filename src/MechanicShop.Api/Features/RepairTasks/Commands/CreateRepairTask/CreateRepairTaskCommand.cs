@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Common.Results;
+using MechanicShop.Api.Domain.Common.Results;
 using MechanicShop.Api.Domain.RepairTasks.Enums;
 using MechanicShop.Api.Features.RepairTasks.Dtos;
 

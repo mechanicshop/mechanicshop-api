@@ -4,7 +4,6 @@ using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
 using MechanicShop.Api.Features.Identity.Dtos;
-using MechanicShop.Api.Features.Identity.Queries.GetUserInfo;
 
 using MediatR;
 

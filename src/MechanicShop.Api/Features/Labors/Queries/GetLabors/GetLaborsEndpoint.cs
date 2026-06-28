@@ -4,7 +4,6 @@ using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
 using MechanicShop.Api.Features.Labors.Dtos;
-using MechanicShop.Api.Features.Labors.Queries.GetLabors;
 
 using MediatR;
 

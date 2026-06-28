@@ -1,4 +1,4 @@
-﻿namespace MechanicShop.Api.Common.Interfaces;
+namespace MechanicShop.Api.Common.Interfaces;
 
 public interface IWorkOrderNotifier
 {

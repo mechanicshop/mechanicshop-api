@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.RepairTasks;
+using MechanicShop.Api.Domain.RepairTasks;
 using MechanicShop.Api.Domain.RepairTasks.Parts;
 using MechanicShop.Api.Features.RepairTasks.Dtos;
 
@@ -17,7 +17,7 @@ public static class RepairTaskMapper
             LaborCost = entity.LaborCost,
             TotalCost = entity.TotalCost,
             EstimatedDurationInMins = entity.EstimatedDurationInMins,
-            Parts = entity.Parts.ToList().ConvertAll(ToDto)
+            Parts = entity.Parts.ToList().ConvertAll(ToDto),
         };
     }
 
@@ -35,7 +35,7 @@ public static class RepairTaskMapper
             PartId = entity.Id,
             Name = entity.Name!,
             Cost = entity.Cost,
-            Quantity = entity.Quantity
+            Quantity = entity.Quantity,
         };
     }
 

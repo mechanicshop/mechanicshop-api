@@ -1,4 +1,4 @@
-﻿namespace MechanicShop.Api.Features.Dashboard.Dtos;
+namespace MechanicShop.Api.Features.Dashboard.Dtos;
 
 public sealed class TodayWorkOrderStatsDto
 {

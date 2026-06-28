@@ -39,7 +39,7 @@ public class GetWorkOrderStatsQueryHandler(IAppDbContext context) :
                 TotalPartsCost = 0,
                 TotalLaborCost = 0,
                 UniqueVehicles = 0,
-                UniqueCustomers = 0
+                UniqueCustomers = 0,
             };
         }
 
@@ -73,7 +73,7 @@ public class GetWorkOrderStatsQueryHandler(IAppDbContext context) :
             OrdersPerVehicle = uniqueVehicles > 0 ? (decimal)total / uniqueVehicles : 0,
             PartsCostRatio = totalRevenue > 0 ? (totalPartCost / totalRevenue) * 100 : 0,
             LaborCostRatio = totalRevenue > 0 ? (totalLaborCost / totalRevenue) * 100 : 0,
-            CancellationRate = total > 0 ? ((decimal)stats.Count(x => x.State == WorkOrderState.Cancelled) / total) * 100 : 0
+            CancellationRate = total > 0 ? ((decimal)stats.Count(x => x.State == WorkOrderState.Cancelled) / total) * 100 : 0,
         };
     }
 }

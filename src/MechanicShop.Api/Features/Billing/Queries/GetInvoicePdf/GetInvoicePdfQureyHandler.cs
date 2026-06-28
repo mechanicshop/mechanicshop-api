@@ -5,7 +5,6 @@ using MechanicShop.Api.Features.Billing.Dtos;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.Billing.Queries.GetInvoicePdf;
 
@@ -35,7 +34,7 @@ public class GetInvoicePdfQureyHandler(
             var invoicePdf = new InvoicePdfDto
             {
                 Content = pdfBytes,
-                FileName = $"invoice-{invoice.Id}.pdf"
+                FileName = $"invoice-{invoice.Id}.pdf",
             };
 
             return invoicePdf;

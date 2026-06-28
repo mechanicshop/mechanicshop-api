@@ -2,7 +2,6 @@ using Asp.Versioning.Builder;
 
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.WorkOrders.Commands.DeleteWorkOrder;
 
 using MediatR;
 

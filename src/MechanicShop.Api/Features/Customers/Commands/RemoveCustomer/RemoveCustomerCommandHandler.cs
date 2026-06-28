@@ -1,17 +1,12 @@
-using System.Threading;
-
 using MechanicShop.Api.Common.Errors;
 using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Domain.Common.Results;
 using MechanicShop.Api.Domain.Customers;
-using MechanicShop.Api.Domain.RepairTasks;
-using MechanicShop.Api.Features.RepairTasks.Commands.RemoveRepairTask;
 
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.Customers.Commands.RemoveCustomer;
 

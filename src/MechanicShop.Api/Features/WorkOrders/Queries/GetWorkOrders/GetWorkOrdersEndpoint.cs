@@ -5,7 +5,6 @@ using MechanicShop.Api.Domain.Workorders.Enums;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
 using MechanicShop.Api.Features.WorkOrders.Dtos;
-using MechanicShop.Api.Features.WorkOrders.Queries.GetWorkOrders;
 
 using MediatR;
 
@@ -19,23 +18,23 @@ public class GetWorkOrdersEndpoint : IEndpoint
     {
         // 1. Standard GetWorkOrders list route
         app.MapGet("/api/v{version:apiVersion}/workorders", GetWorkOrdersHandler)
-        .WithApiVersionSet(apiVersionSet)
-        .HasApiVersion(1.0)
-        .RequireAuthorization()
-        .WithName("GetWorkOrders")
-        .Produces<PaginatedList<WorkOrderListItemDto>>()
-        .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
-        .MapToApiVersion(1.0);
+            .WithApiVersionSet(apiVersionSet)
+            .HasApiVersion(1.0)
+            .RequireAuthorization()
+            .WithName("GetWorkOrders")
+            .Produces<PaginatedList<WorkOrderListItemDto>>()
+            .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
+            .MapToApiVersion(1.0);
 
         // 2. Completed list route
         app.MapGet("/api/v{version:apiVersion}/workorders/completed", GetWorkOrdersHandler)
-        .WithApiVersionSet(apiVersionSet)
-        .HasApiVersion(1.0)
-        .RequireAuthorization()
-        .WithName("GetCompletedWorkOrders")
-        .Produces<PaginatedList<WorkOrderDto>>()
-        .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
-        .MapToApiVersion(1.0);
+            .WithApiVersionSet(apiVersionSet)
+            .HasApiVersion(1.0)
+            .RequireAuthorization()
+            .WithName("GetCompletedWorkOrders")
+            .Produces<PaginatedList<WorkOrderDto>>()
+            .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
+            .MapToApiVersion(1.0);
     }
 
     private static async Task<IResult> GetWorkOrdersHandler(
@@ -58,8 +57,8 @@ public class GetWorkOrdersEndpoint : IEndpoint
             pageRequest.Page,
             pageRequest.PageSize,
             filterRequest.SearchTerm,
-            filterRequest.SortColumn,
-            filterRequest.SortDirection,
+            filterRequest.SortColumn ?? "createdAt",
+            filterRequest.SortDirection ?? "desc",
             filterRequest.State is not null ? (WorkOrderState)(int)filterRequest.State : null,
             filterRequest.VehicleId,
             filterRequest.LaborId,

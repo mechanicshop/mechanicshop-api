@@ -7,7 +7,6 @@ using MechanicShop.Api.Domain.Common.Results;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.Identity.Queries.RefreshTokens;
 

@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 
 using MechanicShop.Api.Domain.Common.Results;
 

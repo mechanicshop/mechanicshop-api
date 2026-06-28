@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Common.Interfaces;
+using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Infrastructure.Identity;
 
 namespace MechanicShop.Tests.Common.Security;

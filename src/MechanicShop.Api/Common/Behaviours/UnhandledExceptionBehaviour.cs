@@ -1,7 +1,5 @@
 using MediatR;
 
-using Microsoft.Extensions.Logging;
-
 namespace MechanicShop.Api.Common.Behaviours;
 
 public class UnhandledExceptionBehaviour<TRequest, TResponse>(ILogger<TRequest> logger)

@@ -7,7 +7,6 @@ using MechanicShop.Api.Features.WorkOrders.Mappers;
 using MediatR;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Features.WorkOrders.Queries.GetWorkOrderByIdQuery;
 

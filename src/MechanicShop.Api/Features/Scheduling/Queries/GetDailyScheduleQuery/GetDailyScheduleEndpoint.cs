@@ -4,7 +4,6 @@ using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
 using MechanicShop.Api.Features.Scheduling.Dtos;
-using MechanicShop.Api.Features.Scheduling.Queries.GetDailyScheduleQuery;
 
 using MediatR;
 

@@ -56,7 +56,7 @@ public class GetWorkOrdersQueryHandler(IAppDbContext context)
                 ? wo.Labor.FirstName + " " + wo.Labor.LastName
                 : null,
             State = wo.State,
-            RepairTasks = wo.RepairTasks.Select(rt => rt.Name).ToList()
+            RepairTasks = wo.RepairTasks.Select(rt => rt.Name).ToList(),
         }).ToList();
 
         return new PaginatedList<WorkOrderListItemDto>
@@ -65,7 +65,7 @@ public class GetWorkOrdersQueryHandler(IAppDbContext context)
             PageNumber = query.Page,
             PageSize = query.PageSize,
             TotalCount = count,
-            TotalPages = (int)Math.Ceiling(count / (double)query.PageSize)
+            TotalPages = (int)Math.Ceiling(count / (double)query.PageSize),
         };
     }
 

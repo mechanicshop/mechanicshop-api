@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Workorders.Enums;
+using MechanicShop.Api.Domain.Workorders.Enums;
 using MechanicShop.Api.Features.WorkOrders.Commands.CreateWorkOrder;
 
 namespace MechanicShop.Tests.Common.WorkOrders;

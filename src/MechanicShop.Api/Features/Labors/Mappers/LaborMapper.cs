@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Employees;
+using MechanicShop.Api.Domain.Employees;
 using MechanicShop.Api.Features.Labors.Dtos;
 
 namespace MechanicShop.Api.Features.Labors.Mappers;

@@ -3,7 +3,6 @@ using Asp.Versioning.Builder;
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
 using MechanicShop.Api.Features.WorkOrders.Dtos;
-using MechanicShop.Api.Features.WorkOrders.Queries.GetWorkOrderByIdQuery;
 
 using MediatR;
 

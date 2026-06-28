@@ -53,7 +53,7 @@ public class CachingBehaviorTests
         string? actualKey = null;
         object? actualValue = null;
         HybridCacheEntryOptions? actualOptions = null;
-        string[]? actualTags = null;
+        string[] ? actualTags = null;
 
         _cache.SetAsync(
             Arg.Do<string>(k => actualKey = k),

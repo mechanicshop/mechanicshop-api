@@ -2,8 +2,6 @@ using Asp.Versioning.Builder;
 
 using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.Identity.Dtos;
-using MechanicShop.Api.Features.Identity.Queries.RefreshTokens;
 
 using MediatR;
 

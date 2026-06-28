@@ -9,10 +9,7 @@ using MechanicShop.Api.Domain.Workorders;
 using MechanicShop.Api.Domain.Workorders.Enums;
 using MechanicShop.Api.Infrastructure.Identity;
 
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace MechanicShop.Api.Infrastructure.Data;
 
@@ -71,7 +68,7 @@ public class ApplicationDbContextInitialiser(
             Id = "19a59129-6c20-417a-834d-11a208d32d96",
             Email = "pm@localhost",
             UserName = "pm@localhost",
-            EmailConfirmed = true
+            EmailConfirmed = true,
         };
 
         if (userManager.Users.All(u => u.Email != manager.Email))
@@ -89,7 +86,7 @@ public class ApplicationDbContextInitialiser(
             Id = "b6327240-0aea-46fc-863a-777fc4e42560",
             Email = "john.labor@localhost",
             UserName = "john.labor@localhost",
-            EmailConfirmed = true
+            EmailConfirmed = true,
         };
 
         if (userManager.Users.All(u => u.Email != labor01.Email))
@@ -107,7 +104,7 @@ public class ApplicationDbContextInitialiser(
             Id = "8104ab20-26c2-4651-b1de-c0baf04dbbd9",
             Email = "peter.labor@localhost",
             UserName = "peter.labor@localhost",
-            EmailConfirmed = true
+            EmailConfirmed = true,
         };
 
         if (userManager.Users.All(u => u.Email != labor02.Email))
@@ -125,7 +122,7 @@ public class ApplicationDbContextInitialiser(
             Id = "e17c83de-1089-4f19-bf79-5f789133d37f",
             Email = "kevin.labor@localhost",
             UserName = "kevin.labor@localhost",
-            EmailConfirmed = true
+            EmailConfirmed = true,
         };
 
         if (userManager.Users.All(u => u.Email != labor03.Email))
@@ -143,7 +140,7 @@ public class ApplicationDbContextInitialiser(
             Id = "54cd01ba-b9ae-4c14-bab6-f3df0219ba4c",
             Email = "suzan.labor@localhost",
             UserName = "suzan.labor@localhost",
-            EmailConfirmed = true
+            EmailConfirmed = true,
         };
 
         if (userManager.Users.All(u => u.Email != labor04.Email))

@@ -4,8 +4,6 @@ using MechanicShop.Api.Features.Identity.Dtos;
 
 using MediatR;
 
-using Microsoft.Extensions.Logging;
-
 namespace MechanicShop.Api.Features.Identity.Queries.GetUserInfo;
 
 public class GetUserByIdQueryHanlder(ILogger<GetUserByIdQueryHanlder> logger, IIdentityService identityService)

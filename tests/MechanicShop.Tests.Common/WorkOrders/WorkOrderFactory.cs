@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Common.Results;
+using MechanicShop.Api.Domain.Common.Results;
 using MechanicShop.Api.Domain.RepairTasks;
 using MechanicShop.Api.Domain.Workorders;
 using MechanicShop.Api.Domain.Workorders.Enums;

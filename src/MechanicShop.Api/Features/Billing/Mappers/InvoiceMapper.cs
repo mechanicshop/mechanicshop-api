@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Domain.Workorders.Billing;
+using MechanicShop.Api.Domain.Workorders.Billing;
 using MechanicShop.Api.Features.Billing.Dtos;
 using MechanicShop.Api.Features.Customers.Mappers;
 
@@ -22,7 +22,7 @@ public static class InvoiceMapper
             DiscountAmount = invoice.DiscountAmount,
             Total = invoice.Total,
             PaymentStatus = invoice.Status.ToString(),
-            Items = invoice.LineItems.Select(x => x.ToDto()).ToList()
+            Items = invoice.LineItems.Select(x => x.ToDto()).ToList(),
         };
     }
 
@@ -40,7 +40,7 @@ public static class InvoiceMapper
             Description = item.Description,
             Quantity = item.Quantity,
             UnitPrice = item.UnitPrice,
-            LineTotal = item.LineTotal
+            LineTotal = item.LineTotal,
         };
     }
 

@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Common.Behaviours;
+using MechanicShop.Api.Common.Behaviours;
 using MechanicShop.Api.Common.Interfaces;
 
 using Microsoft.Extensions.Logging;

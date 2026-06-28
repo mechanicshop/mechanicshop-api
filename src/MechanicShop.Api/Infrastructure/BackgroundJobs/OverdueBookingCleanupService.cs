@@ -3,9 +3,6 @@ using MechanicShop.Api.Domain.Workorders.Enums;
 using MechanicShop.Api.Infrastructure.Settings;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace MechanicShop.Api.Infrastructure.BackgroundJobs;

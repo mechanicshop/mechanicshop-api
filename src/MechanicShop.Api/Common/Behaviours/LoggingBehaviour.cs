@@ -2,8 +2,6 @@ using MechanicShop.Api.Common.Interfaces;
 
 using MediatR.Pipeline;
 
-using Microsoft.Extensions.Logging;
-
 namespace MechanicShop.Api.Common.Behaviours;
 
 public class LoggingBehaviour<TRequest>(ILogger<TRequest> logger, IUser user, IIdentityService identityService)

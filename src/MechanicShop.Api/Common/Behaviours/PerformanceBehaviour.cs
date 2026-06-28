@@ -4,8 +4,6 @@ using MechanicShop.Api.Common.Interfaces;
 
 using MediatR;
 
-using Microsoft.Extensions.Logging;
-
 namespace MechanicShop.Api.Common.Behaviours;
 
 public class PerformanceBehaviour<TRequest, TResponse>(

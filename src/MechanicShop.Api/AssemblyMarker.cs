@@ -1,3 +1,3 @@
-﻿namespace MechanicShop;
+namespace MechanicShop;
 
 public class AssemblyMarker;

@@ -21,7 +21,7 @@ public static class WorkOrderMapper
             Labor = entity.Labor is null ? null : new LaborDto
             {
                 LaborId = entity.LaborId,
-                Name = $"{entity.Labor.FirstName} {entity.Labor.LastName}"
+                Name = $"{entity.Labor.FirstName} {entity.Labor.LastName}",
             },
             RepairTasks = entity.RepairTasks.ToDtos(),
             Vehicle = entity.Vehicle is null ? null : entity.Vehicle.ToDto(),
@@ -31,7 +31,7 @@ public static class WorkOrderMapper
             TotalCost = entity.RepairTasks.Sum(rt => rt.TotalCost),
             TotalDurationInMins = entity.RepairTasks.Sum(rt => (int)rt.EstimatedDurationInMins),
             InvoiceId = entity.Invoice?.Id,
-            CreatedAt = entity.CreatedAtUtc
+            CreatedAt = entity.CreatedAtUtc,
         };
     }
 
@@ -54,7 +54,7 @@ public static class WorkOrderMapper
             Labor = entity.Labor is null ? null :
                 $"{entity.Labor.FirstName} {entity.Labor.LastName}",
             State = entity.State,
-            RepairTasks = entity.RepairTasks.Select(rt => rt.Name).ToList()
+            RepairTasks = entity.RepairTasks.Select(rt => rt.Name).ToList(),
         };
     }
 }

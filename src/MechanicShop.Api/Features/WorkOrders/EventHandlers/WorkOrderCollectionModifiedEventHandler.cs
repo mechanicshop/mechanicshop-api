@@ -1,4 +1,4 @@
-﻿using MechanicShop.Api.Common.Interfaces;
+using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Domain.Workorders.Events;
 
 using MediatR;

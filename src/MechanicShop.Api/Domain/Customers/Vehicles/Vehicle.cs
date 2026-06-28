@@ -1,6 +1,5 @@
 using MechanicShop.Api.Domain.Common;
 using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.Customers;
 
 namespace MechanicShop.Api.Domain.Customers.Vehicles;
 

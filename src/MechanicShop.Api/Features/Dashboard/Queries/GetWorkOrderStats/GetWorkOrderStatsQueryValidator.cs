@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+using FluentValidation;
 
 namespace MechanicShop.Api.Features.Dashboard.Queries.GetWorkOrderStats
 {
