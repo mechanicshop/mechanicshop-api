@@ -1,7 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace MechanicShop.Api.Infrastructure.Settings;
 
 public class AppSettings
 {
+    public const string SectionName = "AppSettings";
+
     public TimeOnly OpeningTime { get; set; }
     public TimeOnly ClosingTime { get; set; }
     public int MaxSpots { get; init; }
@@ -12,6 +16,17 @@ public class AppSettings
     public int DefaultPageSize { get; init; }
     public int BookingCancellationThresholdMinutes { get; init; }
     public int OverdueBookingCleanupFrequencyMinutes { get; init; }
-    public string CorsPolicyName { get; init; } = null!;
-    public string[] AllowedOrigins { get; init; } = null!;
+    public CorsSettings Cors { get; init; } = new();
+}
+
+public class CorsSettings
+{
+    [SetsRequiredMembers]
+    public CorsSettings()
+    {
+    }
+
+    public required string PolicyName { get; set; }
+
+    public string[] AllowedOrigins { get; set; } = Array.Empty<string>();
 }

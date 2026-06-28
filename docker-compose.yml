@@ -1,67 +1,130 @@
 services:
-  mechanicshop.api:
+  db:
+    image: postgres:18.3
+    container_name: mechanicshop-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-MechanicShop}
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-YourStrong@Password1}
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-admin} -d ${POSTGRES_DB:-MechanicShop}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - backend
+
+  db-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    container_name: mechanicshop-db-exporter
+    restart: unless-stopped
+    environment:
+      DATA_SOURCE_NAME: "postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-YourStrong@Password1}@db:5432/${POSTGRES_DB:-MechanicShop}?sslmode=disable"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - backend
+
+  api:
     build:
       context: .
       dockerfile: src/MechanicShop.Api/Dockerfile
-      target: final
-    ports:
-      - "5001:80"
+    container_name: mechanicshop-api
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ASPNETCORE_URLS: http://+:80
-      ConnectionStrings__DefaultConnection: Server=sqlserver,1433;Database=MechanicShopDb;User=sa;Password=YourStrong@Password1;TrustServerCertificate=True;MultipleActiveResultSets=True
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://seq:5341/ingest/otlp/v1/traces
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=db;Port=5432;Database=${POSTGRES_DB:-MechanicShop};Username=${POSTGRES_USER:-admin};Password=${POSTGRES_PASSWORD:-YourStrong@Password1}
+      JwtSettings__Secret: ${JWT_SECRET:-MechanicShop-Dev-Secret-Key-Change-This-2026}
+      JwtSettings__Issuer: MechanicShop.Api
+      JwtSettings__Audience: MechanicShop.Client
+      AppSettings__Cors__PolicyName: "MechanicShop"
+      AppSettings__Cors__AllowedOrigins__0: "http://localhost:4200"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://seq:5341/ingest/otlp/traces
       OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
-    depends_on:
-      - sqlserver
-      - seq
-    restart: on-failure
-
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    environment:
-      ACCEPT_EULA: Y
-      SA_PASSWORD: YourStrong@Password1
     ports:
-      - "1433:1433"
+      - "${API_PORT:-8080}:8080"
+    networks:
+      - frontend
+      - backend
+
+  client:
+    build:
+      context: ./src/MechanicsShop.Client
+      dockerfile: Dockerfile.dev
+    container_name: mechanicshop-client
     volumes:
-      - sqlserver-data:/var/opt/mssql
-    restart: always
+      - ./src/MechanicsShop.Client:/app
+      - /app/node_modules
+    restart: unless-stopped
+    depends_on:
+      api:
+        condition: service_started
+    environment:
+      NODE_ENV: Development
+    ports:
+      - "${CLIENT_PORT:-4200}:4200"
+    networks:
+      - frontend
 
   seq:
     image: datalust/seq:latest
+    container_name: mechanicshop-seq
     volumes:
       - ./containers/seq:/data
     environment:
       ACCEPT_EULA: Y
       SEQ_FIRSTRUN_NOAUTHENTICATION: "true"
     ports:
-      - "5341:5341"
+      - "${SEQ_PORT:-5341}:5341"
       - "8081:80"
+    networks:
+      - backend
     restart: unless-stopped
 
   prometheus:
     image: prom/prometheus:latest
+    container_name: mechanicshop-prometheus
+    networks:
+      - backend
     volumes:
       - ./containers/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
-      - "9090:9090"
+      - "${PROMETHEUS_PORT:-9090}:9090"
     depends_on:
-      - mechanicshop.api
+      - api
     restart: unless-stopped
-      
+
   grafana:
     image: grafana/grafana:latest
+    container_name: mechanicshop-grafana
     environment:
-      GF_SECURITY_ADMIN_PASSWORD: YourStrongPwd
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-P@ssw0rd}
     ports:
-      - "3000:3000"
+      - "${GRAFANA_PORT:-3000}:3000"
     volumes:
       - grafana-data:/var/lib/grafana
     depends_on:
       - prometheus
     restart: unless-stopped
+    networks:
+      - backend
 
 volumes:
-  sqlserver-data:
+  postgres_data:
   grafana-data:
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge

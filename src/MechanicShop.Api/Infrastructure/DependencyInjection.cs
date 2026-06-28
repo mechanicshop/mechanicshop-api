@@ -1,5 +1,7 @@
 using System.Text;
 
+using Community.Microsoft.Extensions.Caching.PostgreSql;
+
 using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Infrastructure.BackgroundJobs;
 using MechanicShop.Api.Infrastructure.Data;
@@ -8,6 +10,7 @@ using MechanicShop.Api.Infrastructure.Identity;
 using MechanicShop.Api.Infrastructure.Identity.Policies;
 using MechanicShop.Api.Infrastructure.RealTime;
 using MechanicShop.Api.Infrastructure.Services;
+using MechanicShop.Api.Infrastructure.Settings;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -15,7 +18,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Caching.Hybrid;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -24,6 +27,8 @@ public static class InfrastructureDependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.ConfigureSettings(configuration);
+
         services.AddSingleton(TimeProvider.System);
 
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -35,34 +40,14 @@ public static class InfrastructureDependencyInjection
         services.AddDbContext<AppDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
-            options.UseSqlServer(connectionString);
+            options.UseNpgsql(connectionString);
         });
 
         services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
 
         services.AddScoped<ApplicationDbContextInitialiser>();
 
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            var jwtSettings = configuration.GetSection("JwtSettings");
-
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = jwtSettings["Issuer"],
-                ValidAudience = jwtSettings["Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(jwtSettings["Secret"]!)),
-            };
-        });
+        services.AddJwtAuthentication();
 
         services
             .AddIdentityCore<AppUser>(options =>
@@ -87,6 +72,11 @@ public static class InfrastructureDependencyInjection
 
         services.AddTransient<IIdentityService, IdentityService>();
 
+        services.AddDistributedPostgreSqlCache(options =>
+        {
+            options.ConnectionString = connectionString;
+        });
+
         services.AddHybridCache(options => options.DefaultEntryOptions = new HybridCacheEntryOptions
         {
             Expiration = TimeSpan.FromMinutes(10), // L2, L3
@@ -103,6 +93,45 @@ public static class InfrastructureDependencyInjection
         services.AddScoped<IWorkOrderNotifier, SignalRWorkOrderNotifier>();
 
         services.AddHostedService<OverdueBookingCleanupService>();
+
+        return services;
+    }
+
+    private static IServiceCollection ConfigureSettings(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOptions<AppSettings>()
+            .Bind(configuration.GetSection(AppSettings.SectionName));
+
+        services.AddOptions<JwtSettings>()
+            .Bind(configuration.GetSection(JwtSettings.SectionName));
+
+        return services;
+    }
+
+    private static IServiceCollection AddJwtAuthentication(this IServiceCollection services)
+    {
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer();
+
+        services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
+            .Configure<IOptions<JwtSettings>>((options, jwtSettings) =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Value.Issuer,
+                    ValidAudience = jwtSettings.Value.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSettings.Value.Secret)),
+                };
+            });
 
         return services;
     }

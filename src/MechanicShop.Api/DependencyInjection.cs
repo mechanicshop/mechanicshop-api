@@ -43,7 +43,7 @@ public static class PresentationDependencyInjection
         return services;
     }
 
-    public static IApplicationBuilder UseCoreMiddlewares(this IApplicationBuilder app, IConfiguration configuration)
+    public static IApplicationBuilder UseCoreMiddlewares(this IApplicationBuilder app, string corsPolicyName)
     {
         // 1. Exception handling should be FIRST to catch all errors
         app.UseExceptionHandler();
@@ -58,7 +58,7 @@ public static class PresentationDependencyInjection
         app.UseSerilogRequestLogging();
 
         // 5. CORS (before authentication/authorization)
-        app.UseCors(configuration["AppSettings:CorsPolicyName"]!);
+        app.UseCors(corsPolicyName);
 
         // 6. Rate limiting (before authentication to protect auth endpoints)
         app.UseRateLimiter();
@@ -207,12 +207,12 @@ public static class PresentationDependencyInjection
 
     private static IServiceCollection AddConfiguredCors(this IServiceCollection services, IConfiguration configuration)
     {
-        var appSettings = configuration.GetSection("AppSettings").Get<AppSettings>()!;
+        var appSettings = configuration.GetSection(AppSettings.SectionName).Get<AppSettings>()!;
 
         services.AddCors(options => options.AddPolicy(
-            appSettings.CorsPolicyName,
+            appSettings.Cors.PolicyName,
             policy => policy
-                .WithOrigins(appSettings.AllowedOrigins)
+                .WithOrigins(appSettings.Cors.AllowedOrigins)
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()));

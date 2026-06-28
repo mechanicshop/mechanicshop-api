@@ -8,15 +8,18 @@ using MechanicShop.Api.Domain.Common.Results;
 using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.Features.Identity;
 using MechanicShop.Api.Features.Identity.Dtos;
+using MechanicShop.Api.Infrastructure.Settings;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MechanicShop.Api.Infrastructure.Identity;
 
-public class TokenProvider(IConfiguration configuration, IAppDbContext context) : ITokenProvider
+public class TokenProvider(IOptions<JwtSettings> jwtOptions, IAppDbContext context) : ITokenProvider
 {
+    private readonly JwtSettings _jwtSettings = jwtOptions.Value;
+
     public async Task<Result<TokenResponse>> GenerateJwtTokenAsync(
         AppUserDto user,
         CancellationToken ct = default)
@@ -36,13 +39,13 @@ public class TokenProvider(IConfiguration configuration, IAppDbContext context) 
         var tokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"]!)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret)),
             ValidateIssuer = true,
-            ValidIssuer = configuration["JwtSettings:Issuer"],
+            ValidIssuer = _jwtSettings.Issuer,
             ValidateAudience = true,
-            ValidAudience = configuration["JwtSettings:Audience"],
+            ValidAudience = _jwtSettings.Audience,
             ValidateLifetime = false, // Ignore token expiration
-            ClockSkew = TimeSpan.Zero
+            ClockSkew = TimeSpan.Zero,
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -63,13 +66,12 @@ public class TokenProvider(IConfiguration configuration, IAppDbContext context) 
         AppUserDto user,
         CancellationToken ct = default)
     {
-        var jwtSettings = configuration.GetSection("JwtSettings");
+        var issuer = _jwtSettings.Issuer;
+        var audience = _jwtSettings.Audience;
+        var key = _jwtSettings.Secret;
+        var expiryMinutes = _jwtSettings.ExpiryMinutes > 0 ? _jwtSettings.ExpiryMinutes : 60;
 
-        var issuer = jwtSettings["Issuer"]!;
-        var audience = jwtSettings["Audience"]!;
-        var key = jwtSettings["Secret"]!;
-
-        var expires = DateTime.UtcNow.AddMinutes(int.Parse(jwtSettings["TokenExpirationInMinutes"]!));
+        var expires = DateTime.UtcNow.AddMinutes(expiryMinutes);
 
         var claims = new List<Claim>
         {
@@ -121,7 +123,7 @@ public class TokenProvider(IConfiguration configuration, IAppDbContext context) 
         {
             AccessToken = tokenHandler.WriteToken(securityToken),
             RefreshToken = refreshToken.Token,
-            ExpiresOnUtc = expires
+            ExpiresOnUtc = expires,
         };
     }
 
