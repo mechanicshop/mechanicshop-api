@@ -9,7 +9,7 @@ public class RepairTaskConfiguration : IEntityTypeConfiguration<RepairTask>
 {
     public void Configure(EntityTypeBuilder<RepairTask> builder)
     {
-        builder.HasKey(rt => rt.Id).IsClustered(false);
+        builder.HasKey(rt => rt.Id);
 
         builder.Property(rt => rt.Id).ValueGeneratedNever();
 

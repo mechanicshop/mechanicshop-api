@@ -11,7 +11,7 @@ public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
     {
         builder.ToTable("RefreshTokens");
 
-        builder.HasKey(rt => rt.Id).IsClustered(false);
+        builder.HasKey(rt => rt.Id);
 
         builder.Property(rt => rt.Token).HasMaxLength(200);
 

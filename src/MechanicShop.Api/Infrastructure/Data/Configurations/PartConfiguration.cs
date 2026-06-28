@@ -9,7 +9,7 @@ public class PartConfiguration : IEntityTypeConfiguration<Part>
 {
     public void Configure(EntityTypeBuilder<Part> builder)
     {
-        builder.HasKey(p => p.Id).IsClustered(false);
+        builder.HasKey(p => p.Id);
         builder.Property(rt => rt.Id).ValueGeneratedNever();
 
         builder.Property(p => p.Name)

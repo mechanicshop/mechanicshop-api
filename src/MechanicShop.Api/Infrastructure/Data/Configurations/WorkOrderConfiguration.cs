@@ -10,7 +10,7 @@ public class WorkOrderConfiguration : IEntityTypeConfiguration<WorkOrder>
 {
     public void Configure(EntityTypeBuilder<WorkOrder> builder)
     {
-        builder.HasKey(w => w.Id).IsClustered(false);
+        builder.HasKey(w => w.Id);
 
         builder.Property(w => w.LaborId)
                .IsRequired();

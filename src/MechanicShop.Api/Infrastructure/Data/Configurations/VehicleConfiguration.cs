@@ -9,7 +9,7 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
 {
     public void Configure(EntityTypeBuilder<Vehicle> builder)
     {
-        builder.HasKey(v => v.Id).IsClustered(false);
+        builder.HasKey(v => v.Id);
 
         builder.Property(v => v.Id).ValueGeneratedNever();
 

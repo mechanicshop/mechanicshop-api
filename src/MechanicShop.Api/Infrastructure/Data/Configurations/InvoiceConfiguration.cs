@@ -11,7 +11,7 @@ public sealed class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
     {
         builder.ToTable("Invoices");
 
-        builder.HasKey(i => i.Id).IsClustered(false);
+        builder.HasKey(i => i.Id);
         builder.Property(rt => rt.Id).ValueGeneratedNever();
 
         builder.Property(i => i.IssuedAtUtc)
