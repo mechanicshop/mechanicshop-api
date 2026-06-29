@@ -43,7 +43,7 @@ public static class PresentationDependencyInjection
         return services;
     }
 
-    public static IApplicationBuilder UseCoreMiddlewares(this IApplicationBuilder app, string corsPolicyName)
+    public static void UseCoreMiddlewares(this IApplicationBuilder app, string corsPolicyName)
     {
         // 1. Exception handling should be FIRST to catch all errors
         app.UseExceptionHandler();
@@ -71,8 +71,6 @@ public static class PresentationDependencyInjection
 
         // 9. Output caching (after auth to cache based on user context)
         app.UseOutputCache();
-
-        return app;
     }
 
     private static IServiceCollection AddAppOutputCaching(this IServiceCollection services)

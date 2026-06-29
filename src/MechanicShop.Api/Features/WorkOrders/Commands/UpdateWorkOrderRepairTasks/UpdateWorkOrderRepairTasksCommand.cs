@@ -6,4 +6,4 @@ namespace MechanicShop.Api.Features.WorkOrders.Commands.UpdateWorkOrderRepairTas
 
 public sealed record UpdateWorkOrderRepairTasksCommand(
     Guid WorkOrderId,
-    Guid[] RepairTaskIds) : IRequest<Result<Updated>>;
+    List<Guid> RepairTaskIds) : IRequest<Result<Updated>>;

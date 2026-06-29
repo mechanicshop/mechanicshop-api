@@ -14,9 +14,9 @@ public class GetWorkOrderByIdEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("/api/v{version:apiVersion}/workorders/{WorkOrderId:guid}", async (Guid WorkOrderId, ISender sender, CancellationToken ct) =>
+        app.MapGet("/api/v{version:apiVersion}/workorders/{workOrderId:guid}", async (Guid workOrderId, ISender sender, CancellationToken ct) =>
         {
-            var result = await sender.Send(new GetWorkOrderByIdQuery(WorkOrderId), ct);
+            var result = await sender.Send(new GetWorkOrderByIdQuery(workOrderId), ct);
             return result.Match(Results.Ok, error => error.ToProblem());
         })
         .WithApiVersionSet(apiVersionSet)

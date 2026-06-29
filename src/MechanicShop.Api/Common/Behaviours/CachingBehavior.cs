@@ -39,7 +39,7 @@ public class CachingBehavior<TRequest, TResponse>(
         {
             result = await next(ct);
 
-            if (result is IResult res && res.IsSuccess)
+            if (result is IResult { IsSuccess: true })
             {
                 logger.LogInformation("Caching result for {RequestName}", typeof(TRequest).Name);
 

@@ -15,9 +15,9 @@ public class UpdateWorkOrderRepairTasksEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPut("/api/v{version:apiVersion}/workorders/{WorkOrderId:guid}/repair-task", async (Guid WorkOrderId, ModifyRepairTaskRequest request, ISender sender, CancellationToken ct) =>
+        app.MapPut("/api/v{version:apiVersion}/workorders/{workOrderId:guid}/repair-task", async (Guid workOrderId, ModifyRepairTaskRequest request, ISender sender, CancellationToken ct) =>
         {
-            var command = new UpdateWorkOrderRepairTasksCommand(WorkOrderId, request.RepairTaskIds);
+            var command = new UpdateWorkOrderRepairTasksCommand(workOrderId, request.RepairTaskIds);
 
             var result = await sender.Send(command, ct);
 

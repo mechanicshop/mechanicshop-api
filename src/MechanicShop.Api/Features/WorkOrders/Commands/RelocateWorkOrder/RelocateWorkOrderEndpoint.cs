@@ -15,10 +15,10 @@ public class RelocateWorkOrderEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPut("/api/v{version:apiVersion}/workorders/{WorkOrderId:guid}/relocation", async (Guid WorkOrderId, RelocateWorkOrderRequest request, ISender sender, CancellationToken ct) =>
+        app.MapPut("/api/v{version:apiVersion}/workorders/{workOrderId:guid}/relocation", async (Guid workOrderId, RelocateWorkOrderRequest request, ISender sender, CancellationToken ct) =>
         {
             var command = new RelocateWorkOrderCommand(
-                WorkOrderId,
+                workOrderId,
                 request.NewStartAtUtc,
                 (Spot)(int)request.NewSpot);
 

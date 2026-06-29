@@ -31,7 +31,7 @@ public class UpdateWorkOrderRepairTasksCommandHandler(
             return ApplicationErrors.WorkOrderNotFound;
         }
 
-        if (command.RepairTaskIds.Length == 0)
+        if (command.RepairTaskIds.Count == 0)
         {
             logger.LogError("Empty RepairTaskIds list submitted.");
 
@@ -42,7 +42,7 @@ public class UpdateWorkOrderRepairTasksCommandHandler(
             .Where(t => command.RepairTaskIds.Contains(t.Id))
             .ToListAsync(ct);
 
-        if (requestedTasks.Count != command.RepairTaskIds.Length)
+        if (requestedTasks.Count != command.RepairTaskIds.Count)
         {
             var missingIds = command.RepairTaskIds.Except(requestedTasks.Select(t => t.Id)).ToArray();
 

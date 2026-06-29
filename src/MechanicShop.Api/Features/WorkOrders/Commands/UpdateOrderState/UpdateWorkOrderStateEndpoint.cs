@@ -15,9 +15,9 @@ public class UpdateWorkOrderStateEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPut("/api/v{version:apiVersion}/workorders/{WorkOrderId:guid}/state", async (Guid WorkOrderId, UpdateWorkOrderStateRequest request, ISender sender, CancellationToken ct) =>
+        app.MapPut("/api/v{version:apiVersion}/workorders/{workOrderId:guid}/state", async (Guid workOrderId, UpdateWorkOrderStateRequest request, ISender sender, CancellationToken ct) =>
         {
-            var command = new UpdateWorkOrderStateCommand(WorkOrderId, request.State);
+            var command = new UpdateWorkOrderStateCommand(workOrderId, request.State);
 
             var result = await sender.Send(command, ct);
 

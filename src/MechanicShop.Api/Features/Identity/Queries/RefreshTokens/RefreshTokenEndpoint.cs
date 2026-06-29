@@ -13,10 +13,29 @@ public class RefreshTokenEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("/identity/token/refresh-token", async (RefreshTokenQuery request, ISender sender, CancellationToken ct) =>
+        app.MapPost("/identity/token/refresh-token", async (RefreshTokenRequest request, HttpContext context, ISender sender, CancellationToken ct) =>
         {
-            var result = await sender.Send(request, ct);
-            return result.Match(Results.Ok, error => error.ToProblem());
+            if (!context.Request.Cookies.TryGetValue("refreshToken", out var refreshToken) || string.IsNullOrWhiteSpace(refreshToken))
+            {
+                return Results.Problem(
+                    detail: "Refresh token is missing.",
+                    statusCode: StatusCodes.Status401Unauthorized,
+                    title: "Unauthorized");
+            }
+
+            var result = await sender.Send(new RefreshTokenQuery(refreshToken, request.ExpiredAccessToken), ct);
+
+            return result.Match(
+                tokenResponse =>
+                {
+                    if (!string.IsNullOrEmpty(tokenResponse.RefreshToken))
+                    {
+                        AppendRefreshTokenCookie(context.Response, tokenResponse.RefreshToken, context.Request.IsHttps);
+                    }
+
+                    return Results.Ok(tokenResponse);
+                },
+                error => error.ToProblem());
         })
         .WithName("RefreshToken")
         .WithSummary("Refreshes an active JWT token.")
@@ -25,4 +44,20 @@ public class RefreshTokenEndpoint : IEndpoint
         .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
         .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError);
     }
+
+    private static void AppendRefreshTokenCookie(HttpResponse response, string refreshToken, bool isHttps)
+    {
+        response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = isHttps,
+            SameSite = isHttps ? SameSiteMode.None : SameSiteMode.Lax,
+            Expires = DateTimeOffset.UtcNow.AddDays(7),
+            Path = "/",
+            MaxAge = TimeSpan.FromDays(7),
+        });
+    }
 }
+
+public record RefreshTokenRequest(string ExpiredAccessToken);
+

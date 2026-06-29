@@ -14,9 +14,9 @@ public class AssignLaborEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPut("/api/v{version:apiVersion}/workorders/{WorkOrderId:guid}/labor", async (Guid WorkOrderId, AssignLaborRequest request, ISender sender, CancellationToken ct) =>
+        app.MapPut("/api/v{version:apiVersion}/workorders/{workOrderId:guid}/labor", async (Guid workOrderId, AssignLaborRequest request, ISender sender, CancellationToken ct) =>
         {
-            var command = new AssignLaborCommand(WorkOrderId, Guid.Parse(request.LaborId));
+            var command = new AssignLaborCommand(workOrderId, Guid.Parse(request.LaborId));
 
             var result = await sender.Send(command, ct);
 

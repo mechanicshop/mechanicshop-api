@@ -13,7 +13,7 @@ public static class RepairTaskMapper
         return new RepairTaskDto
         {
             RepairTaskId = entity.Id,
-            Name = entity.Name!,
+            Name = entity.Name,
             LaborCost = entity.LaborCost,
             TotalCost = entity.TotalCost,
             EstimatedDurationInMins = entity.EstimatedDurationInMins,

@@ -13,7 +13,7 @@ public class AssignLaborCommandHandler(
     ILogger<AssignLaborCommandHandler> logger,
     IAppDbContext context,
     HybridCache cache,
-    IWorkOrderPolicy WorkOrderRuleService
+    IWorkOrderPolicy workOrderRuleService
     )
     : IRequestHandler<AssignLaborCommand, Result<Updated>>
 {
@@ -36,7 +36,7 @@ public class AssignLaborCommandHandler(
             return ApplicationErrors.LaborNotFound;
         }
 
-        if (await WorkOrderRuleService.IsLaborOccupied(command.LaborId, command.WorkOrderId, workOrder.StartAtUtc, workOrder.EndAtUtc))
+        if (await workOrderRuleService.IsLaborOccupied(command.LaborId, command.WorkOrderId, workOrder.StartAtUtc, workOrder.EndAtUtc))
         {
             logger.LogError("Labor with Id '{LaborId}' is already occupied during the requested time.", workOrder.LaborId);
             return ApplicationErrors.LaborOccupied;

@@ -24,7 +24,7 @@ public static class WorkOrderMapper
                 Name = $"{entity.Labor.FirstName} {entity.Labor.LastName}",
             },
             RepairTasks = entity.RepairTasks.ToDtos(),
-            Vehicle = entity.Vehicle is null ? null : entity.Vehicle.ToDto(),
+            Vehicle = entity.Vehicle?.ToDto(),
             State = entity.State,
             TotalPartCost = entity.RepairTasks.SelectMany(t => t.Parts).Sum(p => p.Cost * p.Quantity),
             TotalLaborCost = entity.RepairTasks.Sum(p => p.LaborCost),

@@ -16,7 +16,7 @@ public static class CustomerMapper
             Name = entity.Name!,
             Email = entity.Email!,
             PhoneNumber = entity.PhoneNumber!,
-            Vehicles = entity.Vehicles?.Select(v => v.ToDto()).ToList() ?? [],
+            Vehicles = entity.Vehicles.Select(v => v.ToDto()).ToList(),
         };
     }
 
@@ -29,7 +29,7 @@ public static class CustomerMapper
     {
         ArgumentNullException.ThrowIfNull(entity);
 
-        return new VehicleDto(entity.Id, entity.Make!, entity.Model!, entity.Year, entity.LicensePlate!);
+        return new VehicleDto(entity.Id, entity.Make, entity.Model, entity.Year, entity.LicensePlate);
     }
 
     public static List<VehicleDto> ToDtos(this IEnumerable<Vehicle> entities)

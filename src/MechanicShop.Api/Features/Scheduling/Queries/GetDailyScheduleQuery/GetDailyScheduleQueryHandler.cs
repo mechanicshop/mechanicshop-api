@@ -66,7 +66,7 @@ public class GetDailyScheduleQueryHandler(
 
                 if (wo != null)
                 {
-                    if (!slots.Any(s => s.WorkOrderId == wo.Id))
+                    if (slots.All(s => s.WorkOrderId != wo.Id))
                     {
                         slots.Add(new AvailabilitySlotDto
                         {
@@ -109,6 +109,6 @@ public class GetDailyScheduleQueryHandler(
         return result;
     }
 
-    private static string? FormatVehicleInfo(Vehicle vehicle) =>
-        vehicle != null ? $"{vehicle.Make} | {vehicle.LicensePlate}" : null;
+    private static string FormatVehicleInfo(Vehicle vehicle) =>
+        $"{vehicle.Make} | {vehicle.LicensePlate}";
 }

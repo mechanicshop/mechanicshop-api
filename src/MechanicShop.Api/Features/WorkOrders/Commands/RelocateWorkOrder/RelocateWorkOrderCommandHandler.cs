@@ -14,14 +14,14 @@ public class RelocateWorkOrderCommandHandler(
     ILogger<RelocateWorkOrderCommandHandler> logger,
     IAppDbContext context,
     HybridCache cache,
-    IWorkOrderPolicy WorkOrderValidator
+    IWorkOrderPolicy workOrderValidator
     )
     : IRequestHandler<RelocateWorkOrderCommand, Result<Updated>>
 {
     private readonly ILogger<RelocateWorkOrderCommandHandler> _logger = logger;
     private readonly IAppDbContext _context = context;
     private readonly HybridCache _cache = cache;
-    private readonly IWorkOrderPolicy _appointmentValidator = WorkOrderValidator;
+    private readonly IWorkOrderPolicy _appointmentValidator = workOrderValidator;
 
     public async Task<Result<Updated>> Handle(RelocateWorkOrderCommand command, CancellationToken ct)
     {

@@ -13,9 +13,9 @@ public class DeleteWorkOrderEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapDelete("/api/v{version:apiVersion}/workorders/{WorkOrderId:guid}", async (Guid WorkOrderId, ISender sender, CancellationToken ct) =>
+        app.MapDelete("/api/v{version:apiVersion}/workorders/{workOrderId:guid}", async (Guid workOrderId, ISender sender, CancellationToken ct) =>
         {
-            var result = await sender.Send(new DeleteWorkOrderCommand(WorkOrderId), ct);
+            var result = await sender.Send(new DeleteWorkOrderCommand(workOrderId), ct);
             return result.Match(
                 _ => Results.NoContent(),
                 error => error.ToProblem());
