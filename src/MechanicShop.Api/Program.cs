@@ -49,9 +49,7 @@ app.UseCoreMiddlewares(appSettings.Cors.PolicyName);
 
 app.MapPrometheusScrapingEndpoint();
 
-app.MapControllers();
-
-app.MapEndpoints();
+app.MapAllEndpoints();
 
 app.MapHub<WorkOrderHub>("/hubs/workorders");
 

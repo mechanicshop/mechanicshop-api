@@ -1,21 +1,26 @@
 using Asp.Versioning.Builder;
 
 using MechanicShop.Api.Domain.Identity;
-using MechanicShop.Api.Endpoints;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.Scheduling.Dtos;
+using MechanicShop.Api.Features.Scheduling.Queries.GetDailyScheduleQuery;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Mvc;
 
-namespace MechanicShop.Api.Features.Scheduling.Queries.GetDailyScheduleQuery;
+namespace MechanicShop.Api.Endpoints;
 
-public class GetDailyScheduleEndpoint : IEndpoint
+public static class SchedulingEndpoints
 {
-    public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
+    public static IEndpointRouteBuilder MapSchedulingEndpoints(this IEndpointRouteBuilder app, ApiVersionSet versionSet)
     {
-        app.MapGet("/api/v{version:apiVersion}/workorders/schedule/{date}", async (
+        var group = app.MapGroup("/api/v{version:apiVersion}/workorders")
+            .WithApiVersionSet(versionSet)
+            .HasApiVersion(1.0)
+            .RequireAuthorization(policy => policy.RequireRole(nameof(Role.Manager), nameof(Role.Labor)))
+            .MapToApiVersion(1.0);
+
+        group.MapGet("/schedule/{date}", async (
             DateOnly? date,
             [FromQuery] Guid? laborId,
             [FromHeader(Name = "X-TimeZone")] string? tz,
@@ -48,16 +53,10 @@ public class GetDailyScheduleEndpoint : IEndpoint
 
             var result = await sender.Send(new GetDailyScheduleQuery(timeZone, scheduleDate, laborId), ct);
 
-            return result.Match<IResult>(
-                Results.Ok,
-                error => error.ToProblem());
+            return result.Match<IResult>(Results.Ok, error => error.ToProblem());
         })
-        .WithApiVersionSet(apiVersionSet)
-        .HasApiVersion(1.0)
-        .RequireAuthorization(policy => policy.RequireRole(nameof(Role.Manager), nameof(Role.Labor)))
-        .WithName("GetDailySchedule")
-        .Produces<ScheduleDto>()
-        .Produces<ProblemDetails>(StatusCodes.Status500InternalServerError)
-        .MapToApiVersion(1.0);
+        .WithName("GetDailySchedule");
+
+        return app;
     }
 }
