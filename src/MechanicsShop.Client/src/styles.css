@@ -1,13 +1,13 @@
-@layer reset, base, utilities;
-
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@layer reset, base, utilities;
 
 @theme {
   --font-sans: 'Plus Jakarta Sans', sans-serif;
 }
 
 @layer reset {
+
   *,
   *::before,
   *::after {
@@ -84,44 +84,44 @@
     }
   }
 
+}
+
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 2vw, 1.5rem);
+}
+
+@media (width <= 1399px) {
   .container {
-    width: 100%;
-    max-width: 1320px;
-    margin-inline: auto;
-    padding-inline: clamp(1rem, 2vw, 1.5rem);
-  }
-
-  @media (width <= 1399px) {
-    .container {
-      max-width: 1140px;
-      padding-inline: 15px;
-    }
-  }
-
-  @media (width <= 1199px) {
-    .container {
-      max-width: 960px;
-    }
-  }
-
-  @media (width <= 991px) {
-    .container {
-      max-width: 720px;
-    }
-  }
-
-  @media (width <= 767px) {
-    .container {
-      max-width: 540px;
-    }
-  }
-
-  @media (width <= 575px) {
-    .container {
-      max-width: 100%;
-    }
+    max-width: 1140px;
+    padding-inline: 15px;
   }
 }
 
-@layer utilities {
+@media (width <= 1199px) {
+  .container {
+    max-width: 960px;
+  }
 }
+
+@media (width <= 991px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (width <= 767px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (width <= 575px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@layer utilities {}

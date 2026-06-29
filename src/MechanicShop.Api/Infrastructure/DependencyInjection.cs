@@ -75,6 +75,9 @@ public static class InfrastructureDependencyInjection
         services.AddDistributedPostgreSqlCache(options =>
         {
             options.ConnectionString = connectionString;
+            options.SchemaName = "public";
+            options.TableName = "DistributedCache";
+            options.CreateInfrastructure = true;
         });
 
         services.AddHybridCache(options => options.DefaultEntryOptions = new HybridCacheEntryOptions
