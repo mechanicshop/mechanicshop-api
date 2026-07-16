@@ -15,33 +15,98 @@ interface Service {
   selector: 'app-landing',
   imports: [MatButton, MatCardModule, MatIcon, MatToolbar, RouterLink],
   template: `
-    <div class="h-screen flex flex-col gap-2">
+    <div class="landing-container">
       <mat-toolbar>
-        <span class="text-xl font-bold" style="color: var(--mat-sys-primary)">MechanicShop</span>
-        <span class="flex-1"></span>
-        <button mat-flat-button color="primary" routerLink="/auth/login">Login</button>
+        <div class="container landing-toolbar-content">
+          <span class="logo-text" style="color: var(--mat-sys-primary); font-size: 1.25rem;">MechanicShop</span>
+          <button mat-flat-button color="primary" routerLink="/auth/login">Login</button>
+        </div>
       </mat-toolbar>
 
-      <section class="flex-1 flex flex-col items-center justify-center px-8 gap-4">
-        <h2 class="mb-10 text-center text-3xl font-bold">Our Expert Services</h2>
+      <section class="landing-hero">
+        <h2 class="landing-heading">Our Expert Services</h2>
 
-        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl">
+        <div class="services-grid">
           @for (service of services; track service.title) {
             <mat-card appearance="outlined">
-              <mat-card-content class="flex flex-col items-center text-center p-8">
+              <mat-card-content class="service-card-content">
                 <mat-icon
-                  class="text-7xl"
+                  class="service-icon"
                   style="width: auto; height: auto; color: var(--mat-sys-primary)"
                   >{{ service.icon }}</mat-icon
                 >
-                <h3 class="mb-3 mt-5 text-2xl font-semibold">{{ service.title }}</h3>
-                <p class="text-lg">{{ service.description }}</p>
+                <h3 class="service-title">{{ service.title }}</h3>
+                <p class="service-desc">{{ service.description }}</p>
               </mat-card-content>
             </mat-card>
           }
         </div>
       </section>
     </div>
+  `,
+  styles: `
+    .landing-toolbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    .landing-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .landing-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-inline: 2rem;
+      gap: 1rem;
+    }
+    .landing-heading {
+      margin-bottom: 2.5rem;
+      text-align: center;
+      font-size: 1.875rem;
+      font-weight: 700;
+    }
+    .services-grid {
+      display: grid;
+      gap: 2rem;
+      max-width: 1152px;
+      width: 100%;
+    }
+    @media (min-width: 640px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .service-card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .service-icon {
+      font-size: 4.5rem;
+    }
+    .service-title {
+      margin-bottom: 0.75rem;
+      margin-top: 1.25rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .service-desc {
+      font-size: 1.125rem;
+    }
   `,
 })
 export class Landing {
