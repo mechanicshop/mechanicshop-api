@@ -106,6 +106,7 @@ appsettings.Development.json
 
 # Impeccable
 .impeccable/
+.github/skills/impeccable/
 
 # Agent Tooling
 skills-lock.json
