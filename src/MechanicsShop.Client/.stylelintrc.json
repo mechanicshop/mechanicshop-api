@@ -3,6 +3,7 @@
   "plugins": ["stylelint-order"],
   "rules": {
     "color-named": null,
+    "import-notation": "string",
     "unit-allowed-list": ["px", "rem", "%", "vh", "vw", "em", "s", "ms", "deg", "fr", "dvh"],
     "property-no-vendor-prefix": null,
     "selector-class-pattern": null,
@@ -74,6 +75,12 @@
       "opacity",
       "overflow",
       "cursor"
+    ],
+    "at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["layer"]
+      }
     ]
   },
   "overrides": [

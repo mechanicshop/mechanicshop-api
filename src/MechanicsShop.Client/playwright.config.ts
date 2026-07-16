@@ -1,8 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const recordVideo = process.env['VIDEO'] === 'on';
-
 export default defineConfig({
   testDir: './e2e',
   timeout: 30 * 1000,
@@ -21,10 +18,7 @@ export default defineConfig({
     deviceScaleFactor: 2,
     viewport: { width: 1920, height: 1080 },
     video: (process.env['VIDEO'] || (process.env['CI'] ? 'on' : 'off')) as
-      | 'off'
-      | 'on'
-      | 'retain-on-failure'
-      | 'on-first-retry',
+      'off' | 'on' | 'retain-on-failure' | 'on-first-retry',
   },
 
   projects: [
