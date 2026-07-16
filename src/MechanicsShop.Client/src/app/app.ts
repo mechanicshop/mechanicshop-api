@@ -1,15 +1,26 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+
+import { Topbar } from '@Core/layout/topbar';
+import { AuthService } from '@Features/auth/auth.service';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css',
-  host: {
-    class: 'block container',
-  },
+  standalone: true,
+  imports: [RouterOutlet, Topbar],
+  template: `
+    @if (authService.currentUser()) {
+      <app-topbar />
+    }
+    <router-outlet />
+  `,
+  styles: `
+    :host {
+      display: block;
+    }
+  `,
 })
 export class App {
+  protected readonly authService = inject(AuthService);
   protected readonly title = signal('MechanicsShop.Client');
 }
