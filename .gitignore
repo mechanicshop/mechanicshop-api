@@ -104,6 +104,9 @@ appsettings.Development.json
 **/test-results/
 **/playwright-report/
 
+# Impeccable
+.impeccable/
+
 # Agent Tooling
 skills-lock.json
 .agents/
