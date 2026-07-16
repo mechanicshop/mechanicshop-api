@@ -83,4 +83,3 @@ export interface relocateWorkOrderRequest {
 export interface updateWorkOrderStateRequest {
   state: workOrderState;
 }
-

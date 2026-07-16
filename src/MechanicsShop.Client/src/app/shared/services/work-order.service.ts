@@ -19,8 +19,6 @@ import {
 } from '@shared/models/work-order/work-order.model';
 import { buildParameters } from '@shared/utils/utilities';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -79,7 +77,6 @@ export class WorkOrderService {
     });
     return this.http.get<PaginatedList<workOrder>>(`${this.baseUrl}/completed`, { params });
   }
-
 
   assignLaborToWorkOrder(workOrderId: string, request: assignLaborRequest): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${workOrderId}/labor`, request);
