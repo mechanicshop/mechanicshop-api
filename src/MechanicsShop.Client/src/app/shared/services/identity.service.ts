@@ -19,7 +19,7 @@ export class IdentityService {
   private settings = inject(APP_SETTINGS);
 
   private get baseUrl(): string {
-    return `${this.settings.apiBaseUrl}/identity`;
+    return `${this.settings.apiBaseUrl}/api/v1/identity`;
   }
 
   generateToken(request: generateTokenQuery): Observable<tokenResponse> {

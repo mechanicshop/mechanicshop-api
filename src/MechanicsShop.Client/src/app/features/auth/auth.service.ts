@@ -1,5 +1,6 @@
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 
 import { APP_SETTINGS } from '@Core/config/app.settings';
 import { map, Observable, switchMap, tap } from 'rxjs';
@@ -14,6 +15,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly appSettings = inject(APP_SETTINGS);
   private readonly identityService = inject(IdentityService);
+  private readonly platformId = inject(PLATFORM_ID);
   private _currentUser = signal<appUser | null>(null);
   readonly currentUser = this._currentUser.asReadonly();
   readonly isAuthenticated = computed(() => this._currentUser() !== null);
@@ -21,7 +23,9 @@ export class AuthService {
   private readonly userKey = 'current_user';
 
   constructor() {
-    this.restoreSession();
+    if (isPlatformBrowser(this.platformId)) {
+      this.restoreSession();
+    }
   }
 
   login(credentials: { email: string; password: string }): Observable<appUser> {
@@ -32,7 +36,7 @@ export class AuthService {
       })
       .pipe(
         tap((response) => {
-          if (response.accessToken) {
+          if (response.accessToken && isPlatformBrowser(this.platformId)) {
             localStorage.setItem(this.tokenKey, response.accessToken);
           }
         }),
@@ -44,28 +48,37 @@ export class AuthService {
   refreshAccessToken(expiredAccessToken: string): Observable<string> {
     return this.http
       .post<tokenResponse>(
-        `${this.appSettings.apiBaseUrl}/identity/token/refresh-token`,
+        `${this.appSettings.apiBaseUrl}/api/v1/identity/token/refresh-token`,
         { expiredAccessToken },
         { withCredentials: true },
       )
       .pipe(
         map((response) => response.accessToken),
-        tap((accessToken) => localStorage.setItem(this.tokenKey, accessToken)),
+        tap((accessToken) => {
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem(this.tokenKey, accessToken);
+          }
+        }),
       );
   }
 
   getAccessToken(): string | null {
+    if (!isPlatformBrowser(this.platformId)) return null;
     return localStorage.getItem(this.tokenKey);
   }
 
   clearSession(): void {
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.userKey);
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(this.tokenKey);
+      localStorage.removeItem(this.userKey);
+    }
     this._currentUser.set(null);
   }
 
   private persistUser(user: appUser): void {
-    localStorage.setItem(this.userKey, JSON.stringify(user));
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(this.userKey, JSON.stringify(user));
+    }
     this._currentUser.set(user);
   }
 
@@ -86,4 +99,3 @@ export class AuthService {
     }
   }
 }
-

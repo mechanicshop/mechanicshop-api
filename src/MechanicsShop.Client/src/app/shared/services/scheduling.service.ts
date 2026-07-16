@@ -19,7 +19,7 @@ export class SchedulingService {
     const headers = { 'X-TimeZone': timezone };
     return this.http.get<schedule>(
       `${this.settings.apiBaseUrl}/api/v1/workorders/schedule/${date}`,
-      { params, headers }
+      { params, headers },
     );
   }
 }

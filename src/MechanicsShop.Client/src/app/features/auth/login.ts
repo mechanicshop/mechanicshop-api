@@ -32,14 +32,14 @@ interface LoginFormGroup {
     MatSnackBarModule,
   ],
   template: `
-    <div class="h-screen flex items-center justify-center bg-gray-50">
-      <mat-card class="w-full max-w-md p-6 gap-4">
-        <mat-card-header class="justify-center mb-6">
-          <mat-card-title class="text-3xl font-bold text-center">Login</mat-card-title>
+    <div class="login-container">
+      <mat-card class="login-card">
+        <mat-card-header class="login-header">
+          <mat-card-title class="login-title">Login</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <form class="flex flex-col gap-4" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <mat-form-field class="w-full" appearance="outline">
+          <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field appearance="outline">
               <mat-label>Email</mat-label>
               <input
                 matInput
@@ -56,7 +56,7 @@ interface LoginFormGroup {
               }
             </mat-form-field>
 
-            <mat-form-field class="w-full" appearance="outline">
+            <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
               <input
                 matInput
@@ -71,7 +71,7 @@ interface LoginFormGroup {
             </mat-form-field>
 
             <button
-              class="w-full py-2 text-lg"
+              class="login-button"
               [disabled]="loginForm.invalid"
               mat-flat-button
               color="primary"
@@ -84,7 +84,52 @@ interface LoginFormGroup {
       </mat-card>
     </div>
   `,
-  styles: [],
+  styles: `
+    :host {
+      display: block;
+    }
+    .login-container {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f9fafb;
+    }
+    .login-card {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      background-color: #ffffff;
+      box-shadow: var(--shadow-xl);
+      border-radius: var(--radius-lg);
+      max-width: 420px;
+      width: 100%;
+    }
+    .login-header {
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .login-title {
+      font-size: 1.875rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .login-form mat-form-field {
+      width: 100%;
+    }
+    .login-button {
+      width: 100%;
+      padding-block: 0.5rem;
+      font-size: 1.125rem;
+    }
+  `,
 })
 export class Login {
   private readonly fb = inject(NonNullableFormBuilder);
