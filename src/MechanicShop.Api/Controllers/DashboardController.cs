@@ -1,6 +1,6 @@
 using Asp.Versioning;
 
-using MechanicShop.Api.Features.Dashboard.Queries.GetWorkOrderStats;
+using MechanicShop.Application.Features.Dashboard.Queries.GetWorkOrderStats;
 
 using MediatR;
 

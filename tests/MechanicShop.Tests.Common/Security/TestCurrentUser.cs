@@ -1,6 +1,5 @@
-using MechanicShop.Api.Common.Interfaces;
-using MechanicShop.Api.Infrastructure.Identity;
-
+using MechanicShop.Application.Common.Interfaces;
+using MechanicShop.Infrastructure.Identity;
 namespace MechanicShop.Tests.Common.Security;
 
 public class TestCurrentUser : IUser

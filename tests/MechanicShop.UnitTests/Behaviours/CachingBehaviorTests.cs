@@ -1,6 +1,6 @@
-using MechanicShop.Api.Common.Behaviours;
-using MechanicShop.Api.Common.Interfaces;
-using MechanicShop.Api.Domain.Common.Results;
+using MechanicShop.Application.Common.Behaviours;
+using MechanicShop.Application.Common.Interfaces;
+using MechanicShop.Domain.Common.Results;
 
 using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Logging;
@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.Behaviours;
 
 public class CachingBehaviorTests

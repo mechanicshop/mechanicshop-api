@@ -1,6 +1,5 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.Workorders.Billing;
-
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.Workorders.Billing;
 namespace MechanicShop.Tests.Common.Billing;
 
 public static class InvoiceFactory

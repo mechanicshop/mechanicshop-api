@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+        <PackageReference Include="Npgsql.OpenTelemetry" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" />
+        <PackageReference Include="Community.Microsoft.Extensions.Caching.PostgreSql" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+        <PackageReference Include="OpenTelemetry.Api" />
+        <PackageReference Include="Serilog.AspNetCore" />
+        <PackageReference Include="QuestPDF" />
+        <PackageReference Include="Humanizer" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MechanicShop.Application\MechanicShop.Application.csproj" />
+    </ItemGroup>
+</Project>

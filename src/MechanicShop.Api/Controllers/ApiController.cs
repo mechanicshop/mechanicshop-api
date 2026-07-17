@@ -1,4 +1,4 @@
-using MechanicShop.Api.Domain.Common.Results;
+using MechanicShop.Domain.Common.Results;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;

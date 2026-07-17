@@ -1,9 +1,8 @@
-using MechanicShop.Api.Domain.Workorders;
-using MechanicShop.Api.Domain.Workorders.Enums;
+using MechanicShop.Domain.Workorders;
+using MechanicShop.Domain.Workorders.Enums;
 using MechanicShop.Tests.Common.RepaireTasks;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.WorkOrders;
 
 public class WorkOrderTests

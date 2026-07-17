@@ -1,5 +1,4 @@
-using MechanicShop.Api.Infrastructure.Identity;
-
+using MechanicShop.Infrastructure.Identity;
 namespace MechanicShop.Tests.Common.Security;
 
 internal class UserFactory

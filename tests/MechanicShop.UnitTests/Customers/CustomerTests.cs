@@ -1,10 +1,9 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.Customers;
-using MechanicShop.Api.Domain.Customers.Vehicles;
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.Customers;
+using MechanicShop.Domain.Customers.Vehicles;
 using MechanicShop.Tests.Common.Customers;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.Customers;
 
 public class CustomerTests

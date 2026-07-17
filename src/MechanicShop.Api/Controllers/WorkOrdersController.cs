@@ -1,16 +1,15 @@
 using Asp.Versioning;
 
-using MechanicShop.Api.Domain.Workorders.Enums;
 using MechanicShop.Api.DTOs.Requests.WorkOrders;
-using MechanicShop.Api.Features.WorkOrders.Commands.AssignLabor;
-using MechanicShop.Api.Features.WorkOrders.Commands.CreateWorkOrder;
-using MechanicShop.Api.Features.WorkOrders.Commands.DeleteWorkOrder;
-using MechanicShop.Api.Features.WorkOrders.Commands.RelocateWorkOrder;
-using MechanicShop.Api.Features.WorkOrders.Commands.UpdateOrderState;
-using MechanicShop.Api.Features.WorkOrders.Commands.UpdateWorkOrderRepairTasks;
-using MechanicShop.Api.Features.WorkOrders.Dtos;
-using MechanicShop.Api.Features.WorkOrders.Queries.GetWorkOrderByIdQuery;
-using MechanicShop.Api.Features.WorkOrders.Queries.GetWorkOrders;
+using MechanicShop.Application.Features.WorkOrders.Commands.AssignLabor;
+using MechanicShop.Application.Features.WorkOrders.Commands.CreateWorkOrder;
+using MechanicShop.Application.Features.WorkOrders.Commands.DeleteWorkOrder;
+using MechanicShop.Application.Features.WorkOrders.Commands.RelocateWorkOrder;
+using MechanicShop.Application.Features.WorkOrders.Commands.UpdateOrderState;
+using MechanicShop.Application.Features.WorkOrders.Commands.UpdateWorkOrderRepairTasks;
+using MechanicShop.Application.Features.WorkOrders.Queries.GetWorkOrderByIdQuery;
+using MechanicShop.Application.Features.WorkOrders.Queries.GetWorkOrders;
+using MechanicShop.Domain.Workorders.Enums;
 
 using MediatR;
 

@@ -1,6 +1,5 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.Identity;
-
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.Identity;
 namespace MechanicShop.Tests.Common.Auth;
 
 public static class RefreshTokenFactory

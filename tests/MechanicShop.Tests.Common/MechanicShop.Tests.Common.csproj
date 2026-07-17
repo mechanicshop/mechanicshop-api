@@ -10,6 +10,9 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\..\src\MechanicShop.Api\MechanicShop.Api.csproj" />
+		<ProjectReference Include="..\..\src\MechanicShop.Domain\MechanicShop.Domain.csproj" />
+		<ProjectReference Include="..\..\src\MechanicShop.Application\MechanicShop.Application.csproj" />
+		<ProjectReference Include="..\..\src\MechanicShop.Infrastructure\MechanicShop.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-using MechanicShop.Api.Domain.Workorders.Enums;
+using MechanicShop.Domain.Workorders.Enums;
 
 namespace MechanicShop.Api.DTOs.Requests.WorkOrders;
 

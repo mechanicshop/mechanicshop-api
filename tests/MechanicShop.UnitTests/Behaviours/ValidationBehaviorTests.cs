@@ -1,11 +1,11 @@
 using FluentValidation;
 using FluentValidation.Results;
 
-using MechanicShop.Api.Common.Behaviours;
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Features.WorkOrders.Commands.CreateWorkOrder;
-using MechanicShop.Api.Features.WorkOrders.Dtos;
-using MechanicShop.Api.Features.WorkOrders.Mappers;
+using MechanicShop.Application.Common.Behaviours;
+using MechanicShop.Application.Features.WorkOrders.Commands.CreateWorkOrder;
+using MechanicShop.Application.Features.WorkOrders.Dtos;
+using MechanicShop.Application.Features.WorkOrders.Mappers;
+using MechanicShop.Domain.Common.Results;
 using MechanicShop.Tests.Common.WorkOrders;
 
 using MediatR;

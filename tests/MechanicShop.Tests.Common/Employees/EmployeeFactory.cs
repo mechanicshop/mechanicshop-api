@@ -1,7 +1,6 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.Employees;
-using MechanicShop.Api.Domain.Identity;
-
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.Employees;
+using MechanicShop.Domain.Identity;
 namespace MechanicShop.Tests.Common.Employees;
 
 public static class EmployeeFactory

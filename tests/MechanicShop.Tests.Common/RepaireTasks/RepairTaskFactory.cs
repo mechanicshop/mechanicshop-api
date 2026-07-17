@@ -1,7 +1,7 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.RepairTasks;
-using MechanicShop.Api.Domain.RepairTasks.Enums;
-using MechanicShop.Api.Domain.RepairTasks.Parts;
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.RepairTasks;
+using MechanicShop.Domain.RepairTasks.Enums;
+using MechanicShop.Domain.RepairTasks.Parts;
 
 namespace MechanicShop.Tests.Common.RepaireTasks;
 

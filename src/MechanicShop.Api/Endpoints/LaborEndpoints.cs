@@ -1,8 +1,8 @@
 using Asp.Versioning.Builder;
 
-using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.Labors.Queries.GetLabors;
+using MechanicShop.Application.Features.Labors.Queries.GetLabors;
+using MechanicShop.Domain.Identity;
 
 using MediatR;
 

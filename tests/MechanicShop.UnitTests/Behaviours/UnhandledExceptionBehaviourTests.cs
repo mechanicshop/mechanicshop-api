@@ -1,4 +1,4 @@
-using MechanicShop.Api.Common.Behaviours;
+using MechanicShop.Application.Common.Behaviours;
 
 using MediatR;
 
@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.Behaviours;
 
 public class UnhandledExceptionBehaviourTests

@@ -1,10 +1,9 @@
-using MechanicShop.Api.Domain.Workorders.Billing;
+using MechanicShop.Domain.Workorders.Billing;
 using MechanicShop.Tests.Common.Billing;
 
 using Microsoft.Extensions.Time.Testing;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.WorkOrders.Billing;
 
 public class InvoiceTests

@@ -1,7 +1,6 @@
-using MechanicShop.Api.Domain.Workorders.Billing;
+using MechanicShop.Domain.Workorders.Billing;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.WorkOrders.Billing;
 
 public class InvoiceLineItemTests

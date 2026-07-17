@@ -1,7 +1,7 @@
 using Asp.Versioning;
 
 using MechanicShop.Api.DTOs.Responses;
-using MechanicShop.Api.Infrastructure.Settings;
+using MechanicShop.Infrastructure.Settings;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

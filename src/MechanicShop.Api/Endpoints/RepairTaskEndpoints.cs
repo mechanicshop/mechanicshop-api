@@ -1,13 +1,13 @@
 using Asp.Versioning.Builder;
 
-using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.DTOs.Requests.RepairTasks;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.RepairTasks.Commands.CreateRepairTask;
-using MechanicShop.Api.Features.RepairTasks.Commands.RemoveRepairTask;
-using MechanicShop.Api.Features.RepairTasks.Commands.UpdateRepairTask;
-using MechanicShop.Api.Features.RepairTasks.Queries.GetRepairTaskById;
-using MechanicShop.Api.Features.RepairTasks.Queries.GetRepairTasks;
+using MechanicShop.Application.Features.RepairTasks.Commands.CreateRepairTask;
+using MechanicShop.Application.Features.RepairTasks.Commands.RemoveRepairTask;
+using MechanicShop.Application.Features.RepairTasks.Commands.UpdateRepairTask;
+using MechanicShop.Application.Features.RepairTasks.Queries.GetRepairTaskById;
+using MechanicShop.Application.Features.RepairTasks.Queries.GetRepairTasks;
+using MechanicShop.Domain.Identity;
 
 using MediatR;
 

@@ -1,12 +1,11 @@
-using MechanicShop.Api.Common.Behaviours;
-using MechanicShop.Api.Common.Interfaces;
+using MechanicShop.Application.Common.Behaviours;
+using MechanicShop.Application.Common.Interfaces;
 
 using Microsoft.Extensions.Logging;
 
 using NSubstitute;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.Behaviours;
 
 public class PerformanceBehaviourTests

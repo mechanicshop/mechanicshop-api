@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-using MechanicShop.Api.Domain.RepairTasks.Enums;
+using MechanicShop.Domain.RepairTasks.Enums;
 
 namespace MechanicShop.Api.DTOs.Requests.RepairTasks;
 

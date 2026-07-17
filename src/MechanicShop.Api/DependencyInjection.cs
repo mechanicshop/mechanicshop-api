@@ -3,11 +3,11 @@ using System.Threading.RateLimiting;
 
 using Asp.Versioning;
 
-using MechanicShop.Api.Common.Interfaces;
-using MechanicShop.Api.Infrastructure;
-using MechanicShop.Api.Infrastructure.Settings;
 using MechanicShop.Api.OpenApi.Transformers;
 using MechanicShop.Api.Services;
+using MechanicShop.Application.Common.Interfaces;
+using MechanicShop.Infrastructure;
+using MechanicShop.Infrastructure.Settings;
 
 using Microsoft.AspNetCore.RateLimiting;
 

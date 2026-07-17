@@ -14,33 +14,16 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
         <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
 
-        <!-- MediatR & FluentValidation -->
-        <PackageReference Include="MediatR" />
-        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
-
-        <!-- EF Core + PostgreSQL -->
-        <PackageReference Include="Microsoft.EntityFrameworkCore" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-        <PackageReference Include="Npgsql.OpenTelemetry" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
-
-        <!-- Caching -->
-        <PackageReference Include="Microsoft.Extensions.Caching.Hybrid" />
-        <PackageReference Include="Community.Microsoft.Extensions.Caching.PostgreSql" />
-
-        <!-- Infrastructure & Security -->
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+        <!-- Logging -->
         <PackageReference Include="Serilog.AspNetCore" />
         <PackageReference Include="Serilog.Sinks.Seq" />
+
+        <!-- PDF Generation (license setting) -->
         <PackageReference Include="QuestPDF" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\MechanicShop.Application\MechanicShop.Application.csproj" />
+        <ProjectReference Include="..\MechanicShop.Infrastructure\MechanicShop.Infrastructure.csproj" />
     </ItemGroup>
 </Project>

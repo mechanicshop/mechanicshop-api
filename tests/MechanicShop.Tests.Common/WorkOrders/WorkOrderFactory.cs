@@ -1,9 +1,8 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.RepairTasks;
-using MechanicShop.Api.Domain.Workorders;
-using MechanicShop.Api.Domain.Workorders.Enums;
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.RepairTasks;
+using MechanicShop.Domain.Workorders;
+using MechanicShop.Domain.Workorders.Enums;
 using MechanicShop.Tests.Common.RepaireTasks;
-
 namespace MechanicShop.Tests.Common.WorkOrders;
 
 public static class WorkOrderFactory

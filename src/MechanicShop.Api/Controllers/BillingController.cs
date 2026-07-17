@@ -1,8 +1,8 @@
 using Asp.Versioning;
 
-using MechanicShop.Api.Features.Billing.Commands.IssueInvoice;
-using MechanicShop.Api.Features.Billing.Queries.GetInvoiceById;
-using MechanicShop.Api.Features.Billing.Queries.GetInvoicePdf;
+using MechanicShop.Application.Features.Billing.Commands.IssueInvoice;
+using MechanicShop.Application.Features.Billing.Queries.GetInvoiceById;
+using MechanicShop.Application.Features.Billing.Queries.GetInvoicePdf;
 
 using MediatR;
 

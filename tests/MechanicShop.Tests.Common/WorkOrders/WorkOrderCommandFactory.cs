@@ -1,6 +1,5 @@
-using MechanicShop.Api.Domain.Workorders.Enums;
-using MechanicShop.Api.Features.WorkOrders.Commands.CreateWorkOrder;
-
+using MechanicShop.Application.Features.WorkOrders.Commands.CreateWorkOrder;
+using MechanicShop.Domain.Workorders.Enums;
 namespace MechanicShop.Tests.Common.WorkOrders;
 
 public static class WorkOrderCommandFactory

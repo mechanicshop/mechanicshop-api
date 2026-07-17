@@ -1,7 +1,6 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.Customers;
-using MechanicShop.Api.Domain.Customers.Vehicles;
-
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.Customers;
+using MechanicShop.Domain.Customers.Vehicles;
 namespace MechanicShop.Tests.Common.Customers;
 
 public static class CustomerFactory

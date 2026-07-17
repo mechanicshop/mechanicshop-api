@@ -1,7 +1,7 @@
 using MechanicShop.Api.Endpoints;
-using MechanicShop.Api.Infrastructure.Data;
-using MechanicShop.Api.Infrastructure.RealTime;
-using MechanicShop.Api.Infrastructure.Settings;
+using MechanicShop.Infrastructure.Data;
+using MechanicShop.Infrastructure.RealTime;
+using MechanicShop.Infrastructure.Settings;
 
 using Microsoft.Extensions.Options;
 

@@ -1,13 +1,13 @@
 using Asp.Versioning.Builder;
 
-using MechanicShop.Api.Domain.Identity;
 using MechanicShop.Api.DTOs.Requests.Customers;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.Customers.Commands.CreateCustomer;
-using MechanicShop.Api.Features.Customers.Commands.RemoveCustomer;
-using MechanicShop.Api.Features.Customers.Commands.UpdateCustomer;
-using MechanicShop.Api.Features.Customers.Queries.GetCustomerById;
-using MechanicShop.Api.Features.Customers.Queries.GetCustomers;
+using MechanicShop.Application.Features.Customers.Commands.CreateCustomer;
+using MechanicShop.Application.Features.Customers.Commands.RemoveCustomer;
+using MechanicShop.Application.Features.Customers.Commands.UpdateCustomer;
+using MechanicShop.Application.Features.Customers.Queries.GetCustomerById;
+using MechanicShop.Application.Features.Customers.Queries.GetCustomers;
+using MechanicShop.Domain.Identity;
 
 using MediatR;
 

@@ -1,7 +1,7 @@
 using Asp.Versioning;
 
-using MechanicShop.Api.Domain.Identity;
-using MechanicShop.Api.Features.Scheduling.Queries.GetDailyScheduleQuery;
+using MechanicShop.Application.Features.Scheduling.Queries.GetDailyScheduleQuery;
+using MechanicShop.Domain.Identity;
 
 using MediatR;
 

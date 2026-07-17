@@ -1,11 +1,11 @@
 using Asp.Versioning.Builder;
 
-using MechanicShop.Api.Common.Interfaces;
 using MechanicShop.Api.Extensions;
-using MechanicShop.Api.Features.Identity.Dtos;
-using MechanicShop.Api.Features.Identity.Queries.GenerateTokens;
-using MechanicShop.Api.Features.Identity.Queries.GetUserInfo;
-using MechanicShop.Api.Features.Identity.Queries.RefreshTokens;
+using MechanicShop.Application.Common.Interfaces;
+using MechanicShop.Application.Features.Identity.Dtos;
+using MechanicShop.Application.Features.Identity.Queries.GenerateTokens;
+using MechanicShop.Application.Features.Identity.Queries.GetUserInfo;
+using MechanicShop.Application.Features.Identity.Queries.RefreshTokens;
 
 using MediatR;
 

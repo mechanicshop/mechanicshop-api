@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-using MechanicShop.Api.Common.Interfaces;
+using MechanicShop.Application.Common.Interfaces;
 
 namespace MechanicShop.Api.Services;
 

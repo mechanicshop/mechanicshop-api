@@ -1,10 +1,9 @@
-using MechanicShop.Api.Domain.RepairTasks;
-using MechanicShop.Api.Domain.RepairTasks.Enums;
-using MechanicShop.Api.Domain.RepairTasks.Parts;
+using MechanicShop.Domain.RepairTasks;
+using MechanicShop.Domain.RepairTasks.Enums;
+using MechanicShop.Domain.RepairTasks.Parts;
 using MechanicShop.Tests.Common.RepaireTasks;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.RepairTasks;
 
 public class RepairTaskTests

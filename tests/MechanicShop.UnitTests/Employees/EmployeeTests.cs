@@ -1,9 +1,8 @@
-using MechanicShop.Api.Domain.Employees;
-using MechanicShop.Api.Domain.Identity;
+using MechanicShop.Domain.Employees;
+using MechanicShop.Domain.Identity;
 using MechanicShop.Tests.Common.Employees;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.Employees;
 
 public class EmployeeTests

@@ -1,7 +1,7 @@
 using Asp.Versioning.Builder;
 
 using MechanicShop.Api.DTOs.Responses;
-using MechanicShop.Api.Infrastructure.Settings;
+using MechanicShop.Infrastructure.Settings;
 
 using Microsoft.Extensions.Options;
 

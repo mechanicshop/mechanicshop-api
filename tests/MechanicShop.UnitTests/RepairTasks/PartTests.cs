@@ -1,9 +1,8 @@
-using MechanicShop.Api.Domain.Common.Results;
-using MechanicShop.Api.Domain.RepairTasks.Parts;
+using MechanicShop.Domain.Common.Results;
+using MechanicShop.Domain.RepairTasks.Parts;
 using MechanicShop.Tests.Common.RepaireTasks;
 
 using Xunit;
-
 namespace MechanicShop.UnitTests.RepairTasks;
 
 public class PartTests
