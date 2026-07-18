@@ -21,6 +21,9 @@ app.use(
   createProxyMiddleware({
     target: API_TARGET,
     changeOrigin: true,
+    pathRewrite: {
+      '^/': '/api/',
+    },
   }),
 );
 
@@ -30,6 +33,9 @@ app.use(
     target: API_TARGET,
     ws: true,
     changeOrigin: true,
+    pathRewrite: {
+      '^/': '/hubs/',
+    },
   }),
 );
 

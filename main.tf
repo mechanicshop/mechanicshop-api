@@ -32,7 +32,7 @@ resource "azurerm_container_app" "api" {
 
     container {
       name   = "mechanic-shop-api"
-      image  = "ghcr.io/moamenelbarqy/mechanic-shop-api:latest"
+      image  = "ghcr.io/moamenelbarqy/mechanic-shop/mechanic-shop-api:latest"
       cpu    = "0.5"
       memory = "1Gi"
 
@@ -157,7 +157,7 @@ resource "azurerm_container_app" "client" {
 
     container {
       name   = "mechanic-shop-client"
-      image  = "ghcr.io/moamenelbarqy/mechanic-shop-client:latest"
+      image  = "ghcr.io/moamenelbarqy/mechanic-shop/mechanic-shop-client:latest"
       cpu    = "0.5"
       memory = "1Gi"
 
