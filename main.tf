@@ -112,7 +112,7 @@ resource "azurerm_container_app" "api" {
   }
 
   ingress {
-    allow_insecure_connections = false
+    allow_insecure_connections = true
     external_enabled           = false
     target_port                = 8080
     traffic_weight {
@@ -167,7 +167,7 @@ resource "azurerm_container_app" "client" {
       }
       env {
         name  = "API_URL"
-        value = "http://mechanic-shop-api:8080"
+        value = "http://mechanic-shop-api"
       }
       env {
         name  = "NG_ALLOWED_HOSTS"

@@ -13,6 +13,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
@@ -33,4 +34,20 @@ jobs:
           context: src/MechanicsShop.Client
           file: src/MechanicsShop.Client/Dockerfile
           push: true
-          tags: ghcr.io/${{ env.REPO_LOWER }}/mechanic-shop-client:latest
+          tags: |
+            ghcr.io/${{ env.REPO_LOWER }}/mechanic-shop-client:latest
+            ghcr.io/${{ env.REPO_LOWER }}/mechanic-shop-client:${{ github.sha }}
+
+      - name: Log in to Azure (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Azure Container Apps
+        uses: azure/container-apps-deploy-action@v1
+        with:
+          containerAppName: mechanic-shop-client
+          resourceGroup: mechanic-shop-rg
+          imageToDeploy: ghcr.io/${{ env.REPO_LOWER }}/mechanic-shop-client:${{ github.sha }}
