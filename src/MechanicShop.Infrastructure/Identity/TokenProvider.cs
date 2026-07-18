@@ -10,13 +10,17 @@ using MechanicShop.Domain.Common.Results;
 using MechanicShop.Domain.Identity;
 using MechanicShop.Infrastructure.Settings;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MechanicShop.Infrastructure.Identity;
 
-public class TokenProvider(IOptions<JwtSettings> jwtOptions, IAppDbContext context) : ITokenProvider
+public class TokenProvider(
+    IOptions<JwtSettings> jwtOptions,
+    IAppDbContext context,
+    IHttpContextAccessor httpContextAccessor) : ITokenProvider
 {
     private readonly JwtSettings _jwtSettings = jwtOptions.Value;
 
@@ -43,7 +47,7 @@ public class TokenProvider(IOptions<JwtSettings> jwtOptions, IAppDbContext conte
             ValidateIssuer = true,
             ValidIssuer = _jwtSettings.Issuer,
             ValidateAudience = true,
-            ValidAudience = _jwtSettings.Audience,
+            ValidAudiences = _jwtSettings.Audiences,
             ValidateLifetime = false, // Ignore token expiration
             ClockSkew = TimeSpan.Zero,
         };
@@ -67,7 +71,7 @@ public class TokenProvider(IOptions<JwtSettings> jwtOptions, IAppDbContext conte
         CancellationToken ct = default)
     {
         var issuer = _jwtSettings.Issuer;
-        var audience = _jwtSettings.Audience;
+        var audience = GetValidAudienceFromRequest();
         var key = _jwtSettings.Secret;
         var expiryMinutes = _jwtSettings.ExpiryMinutes > 0 ? _jwtSettings.ExpiryMinutes : 60;
 
@@ -130,5 +134,32 @@ public class TokenProvider(IOptions<JwtSettings> jwtOptions, IAppDbContext conte
     private static string GenerateRefreshToken()
     {
         return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+    }
+
+    private string GetValidAudienceFromRequest()
+    {
+        var httpContext = httpContextAccessor.HttpContext;
+        if (httpContext != null)
+        {
+            var origin = httpContext.Request.Headers.Origin.ToString();
+            if (!string.IsNullOrWhiteSpace(origin) && _jwtSettings.Audiences.Contains(origin))
+            {
+                return origin;
+            }
+
+            var referer = httpContext.Request.Headers.Referer.ToString();
+            if (!string.IsNullOrWhiteSpace(referer))
+            {
+                foreach (var aud in _jwtSettings.Audiences)
+                {
+                    if (referer.StartsWith(aud, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return aud;
+                    }
+                }
+            }
+        }
+
+        return _jwtSettings.Audiences.Length > 0 ? _jwtSettings.Audiences[0] : string.Empty;
     }
 }

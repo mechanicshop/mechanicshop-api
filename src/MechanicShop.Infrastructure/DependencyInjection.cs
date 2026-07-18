@@ -130,7 +130,7 @@ public static class InfrastructureDependencyInjection
                     ClockSkew = TimeSpan.Zero,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtSettings.Value.Issuer,
-                    ValidAudience = jwtSettings.Value.Audience,
+                    ValidAudiences = jwtSettings.Value.Audiences,
                     IssuerSigningKey = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(jwtSettings.Value.Secret)),
                 };
