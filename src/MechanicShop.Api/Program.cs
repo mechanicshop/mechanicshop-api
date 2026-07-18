@@ -42,6 +42,10 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseHsts();
+    if (string.Equals(Environment.GetEnvironmentVariable("AutoMigrateDb"), "true", StringComparison.OrdinalIgnoreCase))
+    {
+        await app.InitialiseDatabaseAsync();
+    }
 }
 
 var appSettings = app.Services.GetRequiredService<IOptions<AppSettings>>().Value;
