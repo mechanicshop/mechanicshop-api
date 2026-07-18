@@ -165,6 +165,14 @@ resource "azurerm_container_app" "client" {
         name  = "PORT"
         value = "4000"
       }
+      env {
+        name  = "API_URL"
+        value = "http://mechanic-shop-api:8080"
+      }
+      env {
+        name  = "NG_ALLOWED_HOSTS"
+        value = "mechanic-shop-client.purpleforest-454b82e9.swedencentral.azurecontainerapps.io"
+      }
     }
   }
 

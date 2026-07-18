@@ -12,9 +12,16 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 const API_TARGET = process.env['API_URL'] || 'http://mechanic-shop-api:8080';
+const allowedHosts = process.env['NG_ALLOWED_HOSTS']
+  ?.split(',')
+  .map((h) => h.trim())
+  .filter(Boolean);
 
 const app = express();
-const angularApp = new AngularNodeAppEngine();
+const angularApp = new AngularNodeAppEngine({
+  trustProxyHeaders: true,
+  ...(allowedHosts?.length ? { allowedHosts } : {}),
+});
 
 app.use(
   '/api',
