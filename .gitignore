@@ -111,3 +111,13 @@ appsettings.Development.json
 # Agent Tooling
 skills-lock.json
 .agents/
+
+# ------------------------------
+# Terraform
+# ------------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+crash.log
+crash.*.log

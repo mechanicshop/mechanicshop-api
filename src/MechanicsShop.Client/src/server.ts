@@ -8,11 +8,30 @@ import {
 } from '@angular/ssr/node';
 
 import express from 'express';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
+const API_TARGET = process.env['API_URL'] || 'http://mechanic-shop-api:8080';
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+app.use(
+  '/api',
+  createProxyMiddleware({
+    target: API_TARGET,
+    changeOrigin: true,
+  }),
+);
+
+app.use(
+  '/hubs',
+  createProxyMiddleware({
+    target: API_TARGET,
+    ws: true,
+    changeOrigin: true,
+  }),
+);
 
 app.use(
   express.static(browserDistFolder, {
@@ -42,8 +61,6 @@ if (isMainModule(import.meta.url) || process.env['pm_id']) {
     if (error) {
       throw error;
     }
-
-    console.log(`Node Express server listening on http://localhost:${port}`);
   });
 }
 
