@@ -11,6 +11,7 @@ using MechanicShop.Infrastructure.Identity;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 namespace MechanicShop.Infrastructure.Data;
@@ -25,7 +26,7 @@ public class ApplicationDbContextInitialiser(
     {
         try
         {
-            await context.Database.EnsureCreatedAsync();
+            await context.Database.MigrateAsync();
         }
         catch (Exception ex)
         {
