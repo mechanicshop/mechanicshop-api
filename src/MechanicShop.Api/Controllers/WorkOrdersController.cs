@@ -55,10 +55,8 @@ public class WorkOrdersController : ApiController
             filterRequest.State is not null ? (WorkOrderState)(int)filterRequest.State : null,
             filterRequest.VehicleId,
             filterRequest.LaborId,
-            filterRequest.StartDateFrom,
-            filterRequest.StartDateTo,
-            filterRequest.EndDateFrom,
-            filterRequest.EndDateTo,
+            filterRequest.StartDate,
+            filterRequest.EndDate,
             filterRequest.Spot is not null ? (Spot)(int)filterRequest.Spot : null);
 
         var result = await _sender.Send(query, ct);

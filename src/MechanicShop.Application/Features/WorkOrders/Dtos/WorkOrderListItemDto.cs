@@ -15,4 +15,6 @@ public class WorkOrderListItemDto
     public DateTimeOffset StartAtUtc { get; set; }
     public DateTimeOffset EndAtUtc { get; set; }
     public List<string> RepairTasks { get; set; } = [];
+    public decimal TotalCost { get; set; }
+    public string? PaymentStatus { get; set; }
 }

@@ -18,11 +18,13 @@ public static class WorkOrderMapper
             Spot = entity.Spot,
             StartAtUtc = entity.StartAtUtc,
             EndAtUtc = entity.EndAtUtc,
-            Labor = entity.Labor is null ? null : new LaborDto
-            {
-                LaborId = entity.LaborId,
-                Name = $"{entity.Labor.FirstName} {entity.Labor.LastName}",
-            },
+            Labor = entity.Labor is null
+                ? null
+                : new LaborDto
+                {
+                    LaborId = entity.LaborId,
+                    Name = $"{entity.Labor.FirstName} {entity.Labor.LastName}",
+                },
             RepairTasks = entity.RepairTasks.ToDtos(),
             Vehicle = entity.Vehicle?.ToDto(),
             State = entity.State,
@@ -32,6 +34,8 @@ public static class WorkOrderMapper
             TotalDurationInMins = entity.RepairTasks.Sum(rt => (int)rt.EstimatedDurationInMins),
             InvoiceId = entity.Invoice?.Id,
             CreatedAt = entity.CreatedAtUtc,
+            Discount = entity.Discount,
+            Tax = entity.Tax,
         };
     }
 
@@ -51,10 +55,11 @@ public static class WorkOrderMapper
             StartAtUtc = entity.StartAtUtc,
             EndAtUtc = entity.EndAtUtc,
             Vehicle = entity.Vehicle!.ToDto(),
-            Labor = entity.Labor is null ? null :
-                $"{entity.Labor.FirstName} {entity.Labor.LastName}",
+            Labor = entity.Labor is null ? null : $"{entity.Labor.FirstName} {entity.Labor.LastName}",
             State = entity.State,
-            RepairTasks = entity.RepairTasks.Select(rt => rt.Name).ToList(),
+            RepairTasks = [.. entity.RepairTasks.Select(rt => rt.Name)],
+            TotalCost = entity.RepairTasks.Sum(rt => rt.TotalCost),
+            PaymentStatus = entity.Invoice is null ? "Pending" : entity.Invoice.Status.ToString(),
         };
     }
 }

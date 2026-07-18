@@ -9,8 +9,6 @@ public record WorkOrderFilterRequest(
     [FromQuery] int? State,
     [FromQuery] Guid? VehicleId,
     [FromQuery] Guid? LaborId,
-    [FromQuery] DateTime? StartDateFrom,
-    [FromQuery] DateTime? StartDateTo,
-    [FromQuery] DateTime? EndDateFrom,
-    [FromQuery] DateTime? EndDateTo,
+    [FromQuery] DateTime? StartDate,
+    [FromQuery] DateTime? EndDate,
     [FromQuery] int? Spot);

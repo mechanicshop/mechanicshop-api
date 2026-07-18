@@ -21,4 +21,6 @@ public class WorkOrderDto
     public decimal TotalCost { get; set; }
     public int TotalDurationInMins { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
+    public decimal? Discount { get; set; }
+    public decimal? Tax { get; set; }
 }

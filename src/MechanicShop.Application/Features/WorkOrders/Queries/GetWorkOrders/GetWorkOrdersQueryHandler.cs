@@ -86,24 +86,14 @@ public class GetWorkOrdersQueryHandler(IAppDbContext context)
             query = query.Where(wo => wo.LaborId == searchQuery.LaborId.Value);
         }
 
-        if (searchQuery.StartDateFrom.HasValue)
+        if (searchQuery.StartDate.HasValue)
         {
-            query = query.Where(wo => wo.StartAtUtc >= searchQuery.StartDateFrom.Value);
+            query = query.Where(wo => wo.StartAtUtc >= searchQuery.StartDate.Value);
         }
 
-        if (searchQuery.StartDateTo.HasValue)
+        if (searchQuery.EndDate.HasValue)
         {
-            query = query.Where(wo => wo.StartAtUtc <= searchQuery.StartDateTo.Value);
-        }
-
-        if (searchQuery.EndDateFrom.HasValue)
-        {
-            query = query.Where(wo => wo.EndAtUtc >= searchQuery.EndDateFrom.Value);
-        }
-
-        if (searchQuery.EndDateTo.HasValue)
-        {
-            query = query.Where(wo => wo.EndAtUtc <= searchQuery.EndDateTo.Value);
+            query = query.Where(wo => wo.EndAtUtc <= searchQuery.EndDate.Value);
         }
 
         if (searchQuery.Spot.HasValue)

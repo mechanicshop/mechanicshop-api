@@ -17,6 +17,7 @@
         <!-- Logging -->
         <PackageReference Include="Serilog.AspNetCore" />
         <PackageReference Include="Serilog.Sinks.Seq" />
+        <PackageReference Include="Serilog.Sinks.Grafana.Loki" />
 
         <!-- PDF Generation (license setting) -->
         <PackageReference Include="QuestPDF" />
