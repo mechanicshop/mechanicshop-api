@@ -493,8 +493,6 @@ export class Customers {
   private showSnackBar(message: string, isError: boolean): void {
     this.snackBar.open(message, 'Close', {
       duration: 4000,
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
       panelClass: isError ? ['error-snackbar'] : ['success-snackbar'],
     });
   }

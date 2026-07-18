@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -9,11 +9,13 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 import { AuthService } from './auth.service';
+import { DemoCredentials } from './demo-credentials';
 
 interface LoginFormGroup {
   email: FormControl<string>;
@@ -29,7 +31,9 @@ interface LoginFormGroup {
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     MatSnackBarModule,
+    DemoCredentials,
   ],
   template: `
     <div class="login-container">
@@ -59,12 +63,23 @@ interface LoginFormGroup {
             <mat-form-field appearance="outline">
               <mat-label>Password</mat-label>
               <input
+                [type]="hidePassword() ? 'password' : 'text'"
                 matInput
-                type="password"
                 formControlName="password"
                 placeholder="Enter your password"
                 required
               />
+              <button
+                class="password-toggle"
+                [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'"
+                (click)="hidePassword.set(!hidePassword())"
+                type="button"
+                mat-icon-button
+                matSuffix
+                tabindex="-1"
+              >
+                <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
               @if (passwordControl.hasError('required') && passwordControl.touched) {
                 <mat-error>Password is required</mat-error>
               }
@@ -80,6 +95,10 @@ interface LoginFormGroup {
               Sign In
             </button>
           </form>
+
+          <div class="divider"></div>
+
+          <app-demo-credentials />
         </mat-card-content>
       </mat-card>
     </div>
@@ -129,6 +148,14 @@ interface LoginFormGroup {
       padding-block: 0.5rem;
       font-size: 1.125rem;
     }
+    .password-toggle {
+      margin-right: 0.5rem;
+    }
+    .divider {
+      height: 1px;
+      background: var(--color-outline-variant);
+      margin: 0.25rem 0;
+    }
   `,
 })
 export class Login {
@@ -136,6 +163,7 @@ export class Login {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
+  readonly hidePassword = signal(true);
 
   readonly loginForm: FormGroup<LoginFormGroup> = this.fb.group<LoginFormGroup>({
     email: this.fb.control('', [Validators.required, Validators.email]),
@@ -160,8 +188,6 @@ export class Login {
         error: () => {
           this.snackBar.open('Invalid email or password. Please try again.', 'Close', {
             duration: 4000,
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
           });
         },
       });
