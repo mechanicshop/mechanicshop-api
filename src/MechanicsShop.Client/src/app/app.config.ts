@@ -1,6 +1,7 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 
 import { APP_SETTINGS, appSettings } from '@Core/config/app.settings';
@@ -15,5 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([authInterceptor])),
     { provide: APP_SETTINGS, useValue: appSettings },
     provideClientHydration(withEventReplay()),
+    // Note: provideAnimations is deprecated in Angular v21+ but still required for Angular Material overlays/dialogs until v23
+    provideAnimations(),
   ],
 };

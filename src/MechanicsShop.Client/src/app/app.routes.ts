@@ -16,6 +16,11 @@ export const routes: Routes = [
     loadComponent: () => import('./features/workorders/workorders').then((m) => m.WorkOrders),
   },
   {
+    path: 'workorders/:id',
+    loadComponent: () =>
+      import('./features/workorders/workorder-details').then((m) => m.WorkOrderDetails),
+  },
+  {
     path: 'repairtasks',
     loadComponent: () => import('./features/repairtasks/repairtasks').then((m) => m.RepairTasks),
   },

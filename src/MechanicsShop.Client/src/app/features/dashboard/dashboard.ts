@@ -56,7 +56,6 @@ export interface MetricCard {
           />
         } @else if (stats(); as s) {
           <div class="stats-wrapper">
-            <!-- Row 1: Status -->
             <div class="status-grid">
               @for (card of statusCards(); track card.label) {
                 <div class="status-card">
@@ -69,28 +68,32 @@ export interface MetricCard {
               }
             </div>
 
-            <!-- Row 2: Financial -->
             <div class="financial-grid">
               @for (card of financialCards(); track card.label) {
                 <mat-card class="metric-card" appearance="outlined">
                   <mat-card-content class="metric-card-content">
                     <div class="card-header-row">
-                      <mat-icon class="metric-icon" [class]="card.iconColor">{{ card.icon }}</mat-icon>
+                      <mat-icon class="metric-icon" [class]="card.iconColor">{{
+                        card.icon
+                      }}</mat-icon>
                       <span class="card-label">{{ card.label }}</span>
                     </div>
-                    <span class="card-value">{{ card.value | currency: 'USD' : 'symbol' : '1.0-0' }}</span>
+                    <span class="card-value">{{
+                      card.value | currency: 'USD' : 'symbol' : '1.0-0'
+                    }}</span>
                   </mat-card-content>
                 </mat-card>
               }
             </div>
 
-            <!-- Row 3: Unique Counts -->
             <div class="metric-grid-3">
               @for (card of uniqueCards(); track card.label) {
                 <mat-card class="metric-card" appearance="outlined">
                   <mat-card-content class="metric-card-content">
                     <div class="card-header-row">
-                      <mat-icon class="metric-icon" [class]="card.iconColor">{{ card.icon }}</mat-icon>
+                      <mat-icon class="metric-icon" [class]="card.iconColor">{{
+                        card.icon
+                      }}</mat-icon>
                       <span class="card-label">{{ card.label }}</span>
                     </div>
                     <span class="card-value">
@@ -105,13 +108,14 @@ export interface MetricCard {
               }
             </div>
 
-            <!-- Row 4: Performance Ratios -->
             <div class="metric-grid-3">
               @for (card of performanceCards(); track card.label) {
                 <mat-card class="metric-card" appearance="outlined">
                   <mat-card-content class="metric-card-content">
                     <div class="card-header-row">
-                      <mat-icon class="metric-icon" [class]="card.iconColor">{{ card.icon }}</mat-icon>
+                      <mat-icon class="metric-icon" [class]="card.iconColor">{{
+                        card.icon
+                      }}</mat-icon>
                       <span class="card-label">{{ card.label }}</span>
                     </div>
                     <span class="card-value">
@@ -194,9 +198,10 @@ export interface MetricCard {
       gap: 0.5rem;
       transition: box-shadow 0.2s var(--ease-standard);
       border: 1px solid var(--color-outline-variant);
-    }
-    .status-card:hover {
-      box-shadow: var(--shadow-sm);
+
+      &:hover {
+        box-shadow: var(--shadow-sm);
+      }
     }
     .card-header-row {
       display: flex;
@@ -208,21 +213,22 @@ export interface MetricCard {
       height: 7px;
       border-radius: var(--radius-full);
       flex-shrink: 0;
-    }
-    .status-dot.dot-primary {
-      background-color: var(--color-primary);
-    }
-    .status-dot.dot-info {
-      background-color: var(--color-info);
-    }
-    .status-dot.dot-warning {
-      background-color: var(--color-warning);
-    }
-    .status-dot.dot-success {
-      background-color: var(--color-success);
-    }
-    .status-dot.dot-danger {
-      background-color: var(--color-danger);
+
+      &.dot-primary {
+        background-color: var(--color-primary);
+      }
+      &.dot-info {
+        background-color: var(--color-info);
+      }
+      &.dot-warning {
+        background-color: var(--color-warning);
+      }
+      &.dot-success {
+        background-color: var(--color-success);
+      }
+      &.dot-danger {
+        background-color: var(--color-danger);
+      }
     }
     .card-label {
       font-size: 0.75rem;
@@ -269,9 +275,10 @@ export interface MetricCard {
     mat-card.metric-card {
       border-radius: var(--radius-md);
       transition: box-shadow 0.2s var(--ease-standard);
-    }
-    mat-card.metric-card:hover {
-      box-shadow: var(--shadow-sm);
+
+      &:hover {
+        box-shadow: var(--shadow-sm);
+      }
     }
     mat-card-content.metric-card-content {
       padding: 1rem 1.25rem;
@@ -287,21 +294,22 @@ export interface MetricCard {
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .metric-icon.icon-success {
-      color: var(--color-success);
-    }
-    .metric-icon.icon-warning {
-      color: var(--color-warning);
-    }
-    .metric-icon.icon-info {
-      color: var(--color-info);
-    }
-    .metric-icon.icon-primary {
-      color: var(--color-primary);
-    }
-    .metric-icon.icon-muted {
-      color: var(--color-muted);
+
+      &.icon-success {
+        color: var(--color-success);
+      }
+      &.icon-warning {
+        color: var(--color-warning);
+      }
+      &.icon-info {
+        color: var(--color-info);
+      }
+      &.icon-primary {
+        color: var(--color-primary);
+      }
+      &.icon-muted {
+        color: var(--color-muted);
+      }
     }
   `,
 })

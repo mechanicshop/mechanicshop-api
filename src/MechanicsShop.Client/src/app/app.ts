@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 
 import { Topbar } from '@Core/layout/topbar';
 import { AuthService } from '@Features/auth/auth.service';
@@ -9,7 +9,7 @@ import { AuthService } from '@Features/auth/auth.service';
   standalone: true,
   imports: [RouterOutlet, Topbar],
   template: `
-    @if (authService.currentUser()) {
+    @if (authService.currentUser() && router.url !== '/' && !router.url.startsWith('/auth')) {
       <app-topbar />
     }
     <router-outlet />
@@ -21,6 +21,7 @@ import { AuthService } from '@Features/auth/auth.service';
   `,
 })
 export class App {
+  protected readonly router = inject(Router);
   protected readonly authService = inject(AuthService);
   protected readonly title = signal('MechanicsShop.Client');
 }

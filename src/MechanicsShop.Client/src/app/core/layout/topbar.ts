@@ -59,10 +59,7 @@ export interface NavLink {
 
         <div class="topbar-right">
           @if (displayDate(); as d) {
-            <time
-              class="topbar-date"
-              [attr.datetime]="d | date: 'yyyy-MM-dd'"
-            >
+            <time class="topbar-date" [attr.datetime]="d | date: 'yyyy-MM-dd'">
               {{ d | date: 'longDate' }}
             </time>
           }
@@ -73,11 +70,7 @@ export interface NavLink {
                 {{ user.email }}
               </span>
             }
-            <button
-              class="logout-btn"
-              (click)="logout()"
-              mat-stroked-button
-            >
+            <button class="logout-btn" (click)="logout()" mat-stroked-button>
               <mat-icon class="logout-icon">logout</mat-icon>
               Logout
             </button>
@@ -173,25 +166,28 @@ export interface NavLink {
       color: var(--color-muted);
       padding: 0.5rem 0.75rem;
       transition: all 0.2s var(--ease-standard);
-    }
-    .nav-link:hover,
-    .nav-link.active {
-      color: var(--color-ink);
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      height: 2px;
-      width: 0;
-      transform: translateX(-50%);
-      background-color: var(--color-primary);
-      transition: all 0.2s var(--ease-standard);
-    }
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      width: 100%;
+
+      &:hover,
+      &.active {
+        color: var(--color-ink);
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        height: 2px;
+        width: 0;
+        transform: translateX(-50%);
+        background-color: var(--color-primary);
+        transition: all 0.2s var(--ease-standard);
+      }
+
+      &:hover::after,
+      &.active::after {
+        width: 100%;
+      }
     }
     .topbar-date {
       font-size: 13px;
