@@ -23,12 +23,20 @@ export function getApiErrorMessage(err: unknown, fallback: string): string {
   }
 
   // Shape B: single Problem
+  if (
+    typeof (body as { detail?: string }).detail === 'string' &&
+    (body as { detail: string }).detail
+  ) {
+    return (body as { detail: string }).detail;
+  }
+
   if (typeof (body as { title?: string }).title === 'string') {
     return (body as { title: string }).title;
   }
 
   return fallback;
 }
+
 export const normalizeBaseUrl = (url: string): string => url.replace(/\/+$/, '');
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

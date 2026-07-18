@@ -86,6 +86,15 @@ describe('getApiErrorMessage', () => {
     expect(getApiErrorMessage(err, fallback)).toBe('Quiz not found');
   });
 
+  it('returns detail if present in single problem responses', () => {
+    const err = new HttpErrorResponse({
+      status: 500,
+      error: { title: 'Application error', detail: 'Actual stack trace or exception message' },
+    });
+
+    expect(getApiErrorMessage(err, fallback)).toBe('Actual stack trace or exception message');
+  });
+
   it('returns fallback for generic validation title without errors map', () => {
     const err = new HttpErrorResponse({
       status: 400,

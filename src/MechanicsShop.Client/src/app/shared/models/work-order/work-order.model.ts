@@ -31,6 +31,8 @@ export interface workOrder {
   totalCost: number;
   totalDurationInMins: number;
   createdAt: string;
+  discount?: number;
+  tax?: number;
 }
 
 export interface workOrderListItem {
@@ -44,6 +46,8 @@ export interface workOrderListItem {
   startAtUtc: string;
   endAtUtc: string;
   repairTasks: string[];
+  totalCost: number;
+  paymentStatus?: string;
 }
 
 export interface workOrderFilterRequest {
@@ -53,10 +57,8 @@ export interface workOrderFilterRequest {
   state?: workOrderState;
   vehicleId?: string;
   laborId?: string;
-  startDateFrom?: string;
-  startDateTo?: string;
-  endDateFrom?: string;
-  endDateTo?: string;
+  startDate?: string;
+  endDate?: string;
   spot?: spot;
 }
 export interface assignLaborRequest {

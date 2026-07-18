@@ -19,13 +19,7 @@ import { MatIcon } from '@angular/material/icon';
           </p>
         }
       </div>
-      <button
-        class="error-button"
-        (click)="retry.emit()"
-        mat-stroked-button
-      >
-        Retry
-      </button>
+      <button class="error-button" (click)="retry.emit()" mat-stroked-button>Retry</button>
     </div>
   `,
   styles: `

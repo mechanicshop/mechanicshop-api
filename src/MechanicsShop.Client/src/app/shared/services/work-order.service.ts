@@ -41,10 +41,8 @@ export class WorkOrderService {
       state?: workOrderState;
       vehicleId?: string;
       laborId?: string;
-      startDateFrom?: string;
-      startDateTo?: string;
-      endDateFrom?: string;
-      endDateTo?: string;
+      startDate?: string;
+      endDate?: string;
       spot?: spot;
     },
   ): Observable<PaginatedList<workOrderListItem>> {
@@ -63,10 +61,8 @@ export class WorkOrderService {
       state?: workOrderState;
       vehicleId?: string;
       laborId?: string;
-      startDateFrom?: string;
-      startDateTo?: string;
-      endDateFrom?: string;
-      endDateTo?: string;
+      startDate?: string;
+      endDate?: string;
       spot?: spot;
     },
   ): Observable<PaginatedList<workOrder>> {
