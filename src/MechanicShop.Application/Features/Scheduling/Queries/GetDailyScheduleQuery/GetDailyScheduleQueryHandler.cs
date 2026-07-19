@@ -51,7 +51,6 @@ public class GetDailyScheduleQueryHandler(
 
             var woBySpot = workOrders
                 .Where(w => w.Spot == spot)
-
                 .OrderBy(w => w.StartAtUtc)
                 .ToList();
 
@@ -80,7 +79,6 @@ public class GetDailyScheduleQueryHandler(
                             RepairTasks = [.. wo.RepairTasks.ToList().ConvertAll(rt => rt.ToDto())],
                             WorkOrderLocked = !wo.IsEditable,
                             State = wo.State,
-                            IsAvailable = false,
                         });
                     }
                 }
@@ -92,7 +90,6 @@ public class GetDailyScheduleQueryHandler(
                         StartAt = startUtc,
                         EndAt = endUtc,
                         WorkOrderLocked = false,
-                        IsAvailable = current >= now,
                     });
                 }
 

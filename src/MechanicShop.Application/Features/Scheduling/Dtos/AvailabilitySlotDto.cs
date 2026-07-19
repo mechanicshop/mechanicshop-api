@@ -13,7 +13,6 @@ public class AvailabilitySlotDto
     public string? Vehicle { get; set; }
     public LaborDto? Labor { get; set; }
     public bool IsOccupied { get; set; }
-    public bool? IsAvailable { get; set; }
     public bool WorkOrderLocked { get; set; }
     public WorkOrderState? State { get; set; }
     public RepairTaskDto[]? RepairTasks { get; set; }
