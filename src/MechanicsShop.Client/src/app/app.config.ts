@@ -1,5 +1,6 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -25,6 +26,13 @@ export const appConfig: ApplicationConfig = {
         horizontalPosition: 'right',
         verticalPosition: 'top',
         duration: 3000,
+      },
+    },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: {
+        maxWidth: '95vw',
+        autoFocus: false,
       },
     },
   ],

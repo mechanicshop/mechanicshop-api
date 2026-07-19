@@ -204,7 +204,6 @@ export type RepairTaskFormGroup = FormGroup<{
       background-color: var(--color-bg);
       display: flex;
       flex-direction: column;
-      max-width: 650px;
     }
     .dialog-header {
       display: flex;
@@ -222,8 +221,8 @@ export type RepairTaskFormGroup = FormGroup<{
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      max-height: 60vh;
-      overflow-y: auto;
+      flex: 1;
+      min-height: 0;
       padding-block: 0.5rem;
       padding-inline: 0.25rem;
     }

@@ -404,8 +404,8 @@ export class RepairTasks {
       RepairTaskDialogData,
       createRepairTaskRequest
     >(RepairTaskDialog, {
-      width: '600px',
-      maxWidth: '90vw',
+      width: '720px',
+      maxWidth: '95vw',
       panelClass: 'custom-dialog-panel',
     });
 
@@ -433,8 +433,8 @@ export class RepairTasks {
       { task: repairTask },
       updateRepairTaskRequest
     >(RepairTaskDialog, {
-      width: '600px',
-      maxWidth: '90vw',
+      width: '720px',
+      maxWidth: '95vw',
       panelClass: 'custom-dialog-panel',
       data: { task },
     });
@@ -459,8 +459,6 @@ export class RepairTasks {
 
   protected onDeleteTask(taskId: string): void {
     const dialogRef = this.dialog.open(ConfirmDialog, {
-      width: '400px',
-      maxWidth: '90vw',
       data: {
         title: 'Delete Repair Task',
         message: 'Are you sure you want to delete this repair task? This action cannot be undone.',

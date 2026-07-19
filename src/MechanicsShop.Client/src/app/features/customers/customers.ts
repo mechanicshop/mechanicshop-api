@@ -404,10 +404,6 @@ export class Customers {
   protected openCreateModal(): void {
     const dialogRef = this.dialog.open<CustomerDialog, CustomerDialogData, createCustomerRequest>(
       CustomerDialog,
-      {
-        width: '650px',
-        maxWidth: '90vw',
-      },
     );
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -434,8 +430,6 @@ export class Customers {
       { customer: customer },
       updateCustomerRequest
     >(CustomerDialog, {
-      width: '650px',
-      maxWidth: '90vw',
       data: { customer: c },
     });
 
@@ -459,8 +453,6 @@ export class Customers {
 
   protected onDeleteCustomer(customerId: string): void {
     const dialogRef = this.dialog.open(ConfirmDialog, {
-      width: '400px',
-      maxWidth: '90vw',
       data: {
         title: 'Delete Customer',
         message:

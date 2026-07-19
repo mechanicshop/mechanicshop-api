@@ -40,9 +40,13 @@ export interface ConfirmDialogData {
     </div>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 480px;
+      max-width: 90vw;
+    }
     .confirm-container {
       padding: 1.5rem;
-      max-width: 400px;
       background-color: var(--color-bg);
     }
     .confirm-header {

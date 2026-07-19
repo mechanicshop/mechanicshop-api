@@ -203,6 +203,10 @@ export type CustomerFormGroup = FormGroup<{
     </div>
   `,
   styles: `
+    :host {
+      display: block;
+      width: 780px;
+    }
     .dialog-container {
       display: flex;
       flex-direction: column;
@@ -223,10 +227,12 @@ export type CustomerFormGroup = FormGroup<{
     }
     .dialog-content {
       padding: 1.5rem;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
     }
     .form-row {
       display: grid;
