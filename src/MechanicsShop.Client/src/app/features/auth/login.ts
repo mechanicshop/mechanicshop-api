@@ -11,6 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
@@ -34,6 +35,7 @@ interface LoginFormGroup {
     MatIconModule,
     MatSnackBarModule,
     DemoCredentials,
+    MatProgressSpinner,
   ],
   template: `
     <div class="login-container">
@@ -46,9 +48,9 @@ interface LoginFormGroup {
             <mat-form-field appearance="outline">
               <mat-label>Email</mat-label>
               <input
+                [formControl]="emailControl"
                 matInput
                 type="email"
-                formControlName="email"
                 placeholder="Enter your email"
                 required
               />
@@ -64,8 +66,8 @@ interface LoginFormGroup {
               <mat-label>Password</mat-label>
               <input
                 [type]="hidePassword() ? 'password' : 'text'"
+                [formControl]="passwordControl"
                 matInput
-                formControlName="password"
                 placeholder="Enter your password"
                 required
               />
@@ -85,15 +87,24 @@ interface LoginFormGroup {
               }
             </mat-form-field>
 
-            <button
-              class="login-button"
-              [disabled]="loginForm.invalid"
-              mat-flat-button
-              color="primary"
-              type="submit"
-            >
-              Sign In
-            </button>
+            <div class="button-container">
+              <button
+                class="login-button"
+                [disabled]="loginForm.invalid || isLoading()"
+                mat-flat-button
+                color="primary"
+                type="submit"
+              >
+                @if (!isLoading()) {
+                  Sign In
+                } @else {
+                  <div class="spinner-container">
+                    <mat-progress-spinner mode="indeterminate" diameter="20" />
+                    <span>Signing in...</span>
+                  </div>
+                }
+              </button>
+            </div>
           </form>
 
           <div class="divider"></div>
@@ -156,6 +167,20 @@ interface LoginFormGroup {
       background: var(--color-outline-variant);
       margin: 0.25rem 0;
     }
+
+    .button-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .spinner-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--color-muted);
+    }
   `,
 })
 export class Login {
@@ -164,6 +189,7 @@ export class Login {
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
   readonly hidePassword = signal(true);
+  readonly isLoading = signal(false);
 
   readonly loginForm: FormGroup<LoginFormGroup> = this.fb.group<LoginFormGroup>({
     email: this.fb.control('', [Validators.required, Validators.email]),
@@ -180,12 +206,15 @@ export class Login {
 
   onSubmit(): void {
     if (this.loginForm.valid) {
+      this.isLoading.set(true);
       const { email, password } = this.loginForm.getRawValue();
       this.authService.login({ email, password }).subscribe({
         next: () => {
+          this.isLoading.set(false);
           this.router.navigate(['/dashboard']);
         },
         error: () => {
+          this.isLoading.set(false);
           this.snackBar.open('Invalid email or password. Please try again.', 'Close', {
             duration: 4000,
           });
