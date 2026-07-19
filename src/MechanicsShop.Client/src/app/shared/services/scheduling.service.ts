@@ -14,7 +14,7 @@ export class SchedulingService {
   private http = inject(HttpClient);
   private settings = inject(APP_SETTINGS);
 
-  getDailySchedule(date: string, timezone: string, laborId?: string): Observable<schedule> {
+  getDailySchedule(date: string, timezone: string, laborId: string | null): Observable<schedule> {
     const params = buildParameters({ laborId });
     const headers = { 'X-TimeZone': timezone };
     return this.http.get<schedule>(
