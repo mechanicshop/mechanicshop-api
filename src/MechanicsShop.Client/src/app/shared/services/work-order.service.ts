@@ -19,6 +19,17 @@ import {
 } from '@shared/models/work-order/work-order.model';
 import { buildParameters } from '@shared/utils/utilities';
 
+export interface WorkOrderQuery extends PaginatedQuery {
+  sortColumn: string | null;
+  sortDirection: string | null;
+  state: workOrderState | null;
+  vehicleId: string | null;
+  laborId: string | null;
+  startDate: string | null;
+  endDate: string | null;
+  spot: spot | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -34,18 +45,7 @@ export class WorkOrderService {
     return this.http.get<workOrder>(`${this.baseUrl}/${workOrderId}`);
   }
 
-  getWorkOrders(
-    query: PaginatedQuery & {
-      sortColumn?: string;
-      sortDirection?: string;
-      state?: workOrderState;
-      vehicleId?: string;
-      laborId?: string;
-      startDate?: string;
-      endDate?: string;
-      spot?: spot;
-    },
-  ): Observable<PaginatedList<workOrderListItem>> {
+  getWorkOrders(query: WorkOrderQuery): Observable<PaginatedList<workOrderListItem>> {
     const { pageNumber, ...rest } = query;
     const params = buildParameters({
       page: pageNumber,
@@ -54,18 +54,7 @@ export class WorkOrderService {
     return this.http.get<PaginatedList<workOrderListItem>>(this.baseUrl, { params });
   }
 
-  getCompletedWorkOrders(
-    query: PaginatedQuery & {
-      sortColumn?: string;
-      sortDirection?: string;
-      state?: workOrderState;
-      vehicleId?: string;
-      laborId?: string;
-      startDate?: string;
-      endDate?: string;
-      spot?: spot;
-    },
-  ): Observable<PaginatedList<workOrder>> {
+  getCompletedWorkOrders(query: WorkOrderQuery): Observable<PaginatedList<workOrder>> {
     const { pageNumber, ...rest } = query;
     const params = buildParameters({
       page: pageNumber,

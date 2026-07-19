@@ -66,7 +66,7 @@ interface FilterFormGroup {
           <mat-form-field class="filter-field search-field" appearance="outline">
             <mat-label>Search Customer or Vehicle</mat-label>
             <input
-              formControlName="name"
+              [formControl]="filterForm.controls.name"
               matInput
               placeholder="Type customer name, make, model or plate..."
             />
@@ -75,21 +75,21 @@ interface FilterFormGroup {
 
           <mat-form-field class="filter-field date-field" appearance="outline">
             <mat-label>Start Date</mat-label>
-            <input [matDatepicker]="startPicker" formControlName="startDate" matInput />
+            <input [matDatepicker]="startPicker" [formControl]="startDateControl" matInput />
             <mat-datepicker-toggle [for]="startPicker" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #startPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field class="filter-field date-field" appearance="outline">
             <mat-label>End Date</mat-label>
-            <input [matDatepicker]="endPicker" formControlName="endDate" matInput />
+            <input [matDatepicker]="endPicker" [formControl]="endDateControl" matInput />
             <mat-datepicker-toggle [for]="endPicker" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field class="filter-field status-field" appearance="outline">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="state">
+            <mat-select [formControl]="stateControl">
               <mat-option value="">All Statuses</mat-option>
               <mat-option [value]="stateEnum.Scheduled">Scheduled</mat-option>
               <mat-option [value]="stateEnum.InProgress">In Progress</mat-option>
@@ -475,6 +475,22 @@ export class WorkOrders {
   protected readonly pageIndex = signal(0);
   protected readonly pageSize = signal(10);
 
+  protected get nameControl() {
+    return this.filterForm.controls.name;
+  }
+
+  protected get startDateControl() {
+    return this.filterForm.controls.startDate;
+  }
+
+  protected get endDateControl() {
+    return this.filterForm.controls.endDate;
+  }
+
+  protected get stateControl() {
+    return this.filterForm.controls.state;
+  }
+
   protected readonly filterForm: FormGroup<FilterFormGroup> = this.fb.group<FilterFormGroup>({
     name: this.fb.control(''),
     startDate: this.fb.control<Date | string | null>(null),
@@ -504,10 +520,15 @@ export class WorkOrders {
       return {
         pageNumber: this.pageIndex() + 1,
         pageSize: this.pageSize(),
-        searchTerm: this.filterValues().name,
-        startDate: formatDate(this.filterValues().startDate),
-        endDate: formatDate(this.filterValues().endDate),
-        state: this.filterValues().state !== '' ? Number(this.filterValues().state) : undefined,
+        searchTerm: this.filterValues().name || null,
+        startDate: formatDate(this.filterValues().startDate) || null,
+        endDate: formatDate(this.filterValues().endDate) || null,
+        state: this.filterValues().state !== '' ? Number(this.filterValues().state) : null,
+        sortColumn: null,
+        sortDirection: null,
+        vehicleId: null,
+        laborId: null,
+        spot: null,
       };
     },
     stream: ({ params }) => this.workOrderService.getWorkOrders(params),

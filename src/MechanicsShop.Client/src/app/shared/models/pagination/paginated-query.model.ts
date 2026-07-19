@@ -1,5 +1,5 @@
 export interface PaginatedQuery {
-  searchTerm?: string;
+  searchTerm: string | null;
   pageNumber: number;
   pageSize: number;
 }
