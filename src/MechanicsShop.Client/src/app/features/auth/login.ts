@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from './auth.service';
 import { DemoCredentials } from './demo-credentials';
@@ -36,9 +36,15 @@ interface LoginFormGroup {
     MatSnackBarModule,
     DemoCredentials,
     MatProgressSpinner,
+    RouterLink,
   ],
   template: `
     <div class="login-container">
+      <a class="landing-button" routerLink="/" mat-button>
+        <mat-icon>arrow_back</mat-icon>
+        Back to landing
+      </a>
+
       <mat-card class="login-card">
         <mat-card-header class="login-header">
           <mat-card-title class="login-title">Login</mat-card-title>
@@ -119,6 +125,7 @@ interface LoginFormGroup {
       display: block;
     }
     .login-container {
+      position: relative;
       height: 100vh;
       width: 100%;
       display: flex;
@@ -171,6 +178,17 @@ interface LoginFormGroup {
     .button-container {
       position: relative;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .landing-button {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      color: var(--color-muted);
+      font-weight: 600;
+      z-index: 1;
     }
 
     .spinner-container {
