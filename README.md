@@ -12,7 +12,7 @@ Built with **.NET 10** · **Angular 21 (SSR)** · **PostgreSQL** · **SignalR** 
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-4169E1?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
-> **⚠️ RED FLAG — Scale-to-Zero:** The live demo runs on Azure Container Apps with **scale-to-zero**. The first request after inactivity may take **up to 10 minutes** while both the API and Client containers cold-start. Please be patient.
+> **⚠️ RED FLAG — Scale-to-Zero:** The live demo runs on Azure Container Apps with **scale-to-zero**. The first request after inactivity may take **up to 10 seconds** while both the API and Client containers cold-start. Please be patient.
 
 </div>
 
@@ -20,11 +20,62 @@ Built with **.NET 10** · **Angular 21 (SSR)** · **PostgreSQL** · **SignalR** 
 
 ## 📑 Table of Contents
 
+- [📸 Screenshots](#-screenshots)
 - [🏗️ Architecture Overview](#️-architecture-overview)
 - [✨ Key Features](#-key-features)
 - [🛠️ Tech Stack](#️-tech-stack)
 - [🚦 Getting Started](#-getting-started)
 - [☁️ Infrastructure](#️-infrastructure)
+
+---
+
+## 📸 Screenshots
+
+<details>
+<summary>📂 View Database Schema & Application Screenshots</summary>
+
+### 🗄️ Relational Schema
+
+<div align="center">
+  <img src="docs/images/database-schema.png" alt="MechanicShop Relational Schema" width="70%"/>
+</div>
+
+### 🖥️ Application Pages
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <b>🏁 Landing Page</b><br/>
+      <img src="docs/images/landing.png" alt="MechanicShop Landing Page" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>📊 Dashboard</b><br/>
+      <img src="docs/images/dashboard.png" alt="MechanicShop Dashboard" width="100%"/>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>👥 Customers</b><br/>
+      <img src="docs/images/customers.png" alt="MechanicShop Customers Page" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>📝 Work Orders</b><br/>
+      <img src="docs/images/workorders.png" alt="MechanicShop Work Orders Page" width="100%"/>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>📅 Schedules</b><br/>
+      <img src="docs/images/schedules.png" alt="MechanicShop Schedules Page" width="100%"/>
+    </td>
+    <td width="50%" align="center">
+      <b>🔧 Repair Tasks</b><br/>
+      <img src="docs/images/repair-tasks.png" alt="MechanicShop Repair Tasks Page" width="100%"/>
+    </td>
+  </tr>
+</table>
+
+</details>
 
 ---
 
