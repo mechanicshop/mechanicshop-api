@@ -18,29 +18,22 @@ namespace MechanicShop.Api.Controllers;
 [Route("api/v{version:apiVersion}/customers")]
 [ApiVersion("1.0")]
 [Authorize]
-public class CustomersController : ApiController
+public class CustomersController(ISender sender) : ApiController
 {
-    private readonly ISender _sender;
-
-    public CustomersController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpGet]
     public async Task<ActionResult> GetCustomers(CancellationToken ct)
     {
-        var result = await _sender.Send(new GetCustomersQuery(), ct);
+        var result = await sender.Send(new GetCustomersQuery(), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     [HttpGet("{customerId:guid}")]
     public async Task<ActionResult> GetCustomerById(Guid customerId, CancellationToken ct)
     {
-        var result = await _sender.Send(new GetCustomerByIdQuery(customerId), ct);
+        var result = await sender.Send(new GetCustomerByIdQuery(customerId), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     [HttpPost]
@@ -50,10 +43,10 @@ public class CustomersController : ApiController
         var vehicles = request.Vehicles
             .ConvertAll(v => new CreateVehicleCommand(v.Make, v.Model, v.Year, v.LicensePlate));
 
-        var result = await _sender.Send(
+        var result = await sender.Send(
             new CreateCustomerCommand(request.Name, request.PhoneNumber, request.Email, vehicles), ct);
 
-        return result.Match<ActionResult>(
+        return result.Match(
             r => CreatedAtRoute("GetCustomerById", new { version = "1.0", customerId = r.CustomerId }, r),
             Problem);
     }
@@ -65,18 +58,18 @@ public class CustomersController : ApiController
         var vehicles = request.Vehicles
             .ConvertAll(v => new UpdateVehicleCommand(v.VehicleId, v.Make, v.Model, v.Year, v.LicensePlate));
 
-        var result = await _sender.Send(
+        var result = await sender.Send(
             new UpdateCustomerCommand(customerId, request.Name, request.PhoneNumber, request.Email, vehicles), ct);
 
-        return result.Match<ActionResult>(_ => Created(), Problem);
+        return result.Match(_ => Created(), Problem);
     }
 
     [HttpDelete("{customerId:guid}")]
     [Authorize(Roles = nameof(Role.Manager))]
     public async Task<ActionResult> RemoveCustomer(Guid customerId, CancellationToken ct)
     {
-        var result = await _sender.Send(new RemoveCustomerCommand(customerId), ct);
+        var result = await sender.Send(new RemoveCustomerCommand(customerId), ct);
 
-        return result.Match<ActionResult>(_ => NoContent(), Problem);
+        return result.Match(_ => NoContent(), Problem);
     }
 }

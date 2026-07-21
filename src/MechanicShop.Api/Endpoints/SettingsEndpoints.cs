@@ -18,9 +18,7 @@ public static class SettingsEndpoints
             .MapToApiVersion(1.0);
 
         group.MapGet("/operating-hours", (IOptions<AppSettings> options) =>
-        {
-            return Results.Ok(new OperatingHoursResponse(options.Value.OpeningTime, options.Value.ClosingTime));
-        })
+            Results.Ok(new OperatingHoursResponse(options.Value.OpeningTime, options.Value.ClosingTime)))
         .WithName("GetOperatingHours");
 
         return app;

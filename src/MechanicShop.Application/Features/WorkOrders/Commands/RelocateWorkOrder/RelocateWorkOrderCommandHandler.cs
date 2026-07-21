@@ -19,14 +19,9 @@ public class RelocateWorkOrderCommandHandler(
     )
     : IRequestHandler<RelocateWorkOrderCommand, Result<Updated>>
 {
-    private readonly ILogger<RelocateWorkOrderCommandHandler> _logger = logger;
-    private readonly IAppDbContext _context = context;
-    private readonly HybridCache _cache = cache;
-    private readonly IWorkOrderPolicy _appointmentValidator = workOrderValidator;
-
     public async Task<Result<Updated>> Handle(RelocateWorkOrderCommand command, CancellationToken ct)
     {
-        var workOrder = await _context.WorkOrders
+        var workOrder = await context.WorkOrders
             .Include(a => a.RepairTasks)
             .Include(a => a.Labor)
             .Include(a => a.Vehicle)
@@ -34,7 +29,7 @@ public class RelocateWorkOrderCommandHandler(
 
         if (workOrder is null)
         {
-            _logger.LogError("WorkOrder with Id '{WorkOrderId}' does not exist.", command.WorkOrderId);
+            logger.LogError("WorkOrder with Id '{WorkOrderId}' does not exist.", command.WorkOrderId);
 
             return ApplicationErrors.WorkOrderNotFound;
         }
@@ -43,7 +38,7 @@ public class RelocateWorkOrderCommandHandler(
 
         var endAt = command.NewStartAt.Add(duration);
 
-        var checkSpotAvailabilityResult = await _appointmentValidator.CheckSpotAvailabilityAsync(
+        var checkSpotAvailabilityResult = await workOrderValidator.CheckSpotAvailabilityAsync(
             workOrder.Spot,
             command.NewStartAt,
             endAt,
@@ -52,21 +47,21 @@ public class RelocateWorkOrderCommandHandler(
 
         if (checkSpotAvailabilityResult.IsError)
         {
-            _logger.LogError("Spot: {Spot} is not available.", workOrder.Spot.ToString());
+            logger.LogError("Spot: {Spot} is not available.", workOrder.Spot.ToString());
 
             return checkSpotAvailabilityResult.Errors;
         }
 
-        if (await _appointmentValidator.IsLaborOccupied(workOrder.LaborId, command.WorkOrderId, command.NewStartAt, endAt))
+        if (await workOrderValidator.IsLaborOccupied(workOrder.LaborId, command.WorkOrderId, command.NewStartAt, endAt))
         {
-            _logger.LogError("Labor with Id '{LaborId}' is already occupied during the requested time.", workOrder.LaborId);
+            logger.LogError("Labor with Id '{LaborId}' is already occupied during the requested time.", workOrder.LaborId);
 
             return ApplicationErrors.LaborOccupied;
         }
 
-        if (await _appointmentValidator.IsVehicleAlreadyScheduled(workOrder.VehicleId, command.NewStartAt, endAt, command.WorkOrderId))
+        if (await workOrderValidator.IsVehicleAlreadyScheduled(workOrder.VehicleId, command.NewStartAt, endAt, command.WorkOrderId))
         {
-            _logger.LogError("Vehicle with Id '{VehicleId}' already has an overlapping WorkOrder.", workOrder.VehicleId);
+            logger.LogError("Vehicle with Id '{VehicleId}' already has an overlapping WorkOrder.", workOrder.VehicleId);
 
             return ApplicationErrors.VehicleSchedulingConflict;
         }
@@ -75,7 +70,7 @@ public class RelocateWorkOrderCommandHandler(
 
         if (updateTimingResult.IsError)
         {
-            _logger.LogError("Failed to update timing: {Error}", updateTimingResult.TopError.Description);
+            logger.LogError("Failed to update timing: {Error}", updateTimingResult.TopError.Description);
 
             return updateTimingResult.Errors;
         }
@@ -84,18 +79,18 @@ public class RelocateWorkOrderCommandHandler(
 
         if (updateTimingResult.IsError)
         {
-            _logger.LogError("Failed to update Spot: {Error}", updateSpotResult.TopError.Description);
+            logger.LogError("Failed to update Spot: {Error}", updateSpotResult.TopError.Description);
 
             return updateTimingResult.Errors;
         }
 
         workOrder.AddDomainEvent(new WorkOrderCollectionModified());
 
-        await _context.SaveChangesAsync(ct);
+        await context.SaveChangesAsync(ct);
 
         workOrder.AddDomainEvent(new WorkOrderCollectionModified());
 
-        await _cache.RemoveByTagAsync("work-order", ct);
+        await cache.RemoveByTagAsync("work-order", ct);
 
         return Result.Updated;
     }

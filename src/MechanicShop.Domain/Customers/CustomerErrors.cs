@@ -7,9 +7,6 @@ public static class CustomerErrors
     public static Error NameRequired =>
         Error.Validation("Customer_Name_Required", "Customer name is required");
 
-    public static Error PhoneNumberRequired =>
-        Error.Validation("Customer_Number_Required", "Phone number is required");
-
     public static Error EmailRequired =>
         Error.Validation("Customer_Email_Required", "Email is required");
 

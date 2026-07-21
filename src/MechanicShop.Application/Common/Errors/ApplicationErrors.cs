@@ -47,11 +47,6 @@ public static class ApplicationErrors
        "ApplicationErrors.Invoice.NotFound",
        "Invoice does not exist.");
 
-    public static Error InvalidRefreshToken =>
-    Error.Validation(
-        "RefreshToken.Expiry.Invalid",
-        "Expiry must be in the future.");
-
     public static readonly Error ExpiredAccessTokenInvalid = Error.Conflict(
          code: "Auth.ExpiredAccessToken.Invalid",
          description: "Expired access token is not valid.");

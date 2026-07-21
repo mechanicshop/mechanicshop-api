@@ -19,39 +19,34 @@ public class DeleteWorkOrderCommandHandler(
     )
     : IRequestHandler<DeleteWorkOrderCommand, Result<Deleted>>
 {
-    private readonly ILogger<DeleteWorkOrderCommandHandler> _logger = logger;
-    private readonly IAppDbContext _context = context;
-    private readonly HybridCache _cache = cache;
-    private readonly TimeProvider _dateTime = dateTime;
-
     public async Task<Result<Deleted>> Handle(DeleteWorkOrderCommand command, CancellationToken ct)
     {
-        var workOrder = await _context.WorkOrders
+        var workOrder = await context.WorkOrders
             .FirstOrDefaultAsync(a => a.Id == command.WorkOrderId, ct);
 
         if (workOrder is null)
         {
-            _logger.LogError("WorkOrder with Id '{WorkOrderId}' does not exist.", command.WorkOrderId);
+            logger.LogError("WorkOrder with Id '{WorkOrderId}' does not exist.", command.WorkOrderId);
 
             return ApplicationErrors.WorkOrderNotFound;
         }
 
-        var deleteResult = workOrder.Delete(_dateTime.GetUtcNow());
+        var deleteResult = workOrder.Delete(dateTime.GetUtcNow());
 
         if (deleteResult.IsError)
         {
-            _logger.LogError(
+            logger.LogError(
                 "Deletion failed: only 'Scheduled' or 'Confirmed' WorkOrders can be deleted. Current status: {Status}",
                 workOrder.State);
 
             return deleteResult.Errors;
         }
 
-        await _context.SaveChangesAsync(ct);
+        await context.SaveChangesAsync(ct);
 
         workOrder.AddDomainEvent(new WorkOrderCollectionModified());
 
-        await _cache.RemoveByTagAsync("work-order", ct);
+        await cache.RemoveByTagAsync("work-order", ct);
 
         return Result.Deleted;
     }

@@ -13,12 +13,6 @@ public static class RepairTaskErrors
     public static Error DurationInvalid =>
         Error.Validation("RepairTask.Duration.Invalid", "Invalid duration selected.");
 
-    public static Error PartsRequired =>
-        Error.Validation("RepairTask.Parts.Required", "At least one part is required.");
-
-    public static Error PartNameRequired =>
-        Error.Validation("RepairTask.Parts.Name.Required", "All parts must have a name.");
-
     public static Error AtLeastOneRepairTaskIsRequired =>
           Error.Validation(
               code: "RepairTask.Required",

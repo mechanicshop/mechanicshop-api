@@ -21,26 +21,21 @@ public class UpdateWorkOrderStateCommandHandler(
     )
     : IRequestHandler<UpdateWorkOrderStateCommand, Result<Updated>>
 {
-    private readonly ILogger<UpdateWorkOrderStateCommandHandler> _logger = logger;
-    private readonly IAppDbContext _context = context;
-    private readonly HybridCache _cache = cache;
-    private readonly TimeProvider _dateTime = dateTime;
-
     public async Task<Result<Updated>> Handle(UpdateWorkOrderStateCommand command, CancellationToken ct)
     {
-        var workOrder = await _context.WorkOrders
+        var workOrder = await context.WorkOrders
             .FirstOrDefaultAsync(a => a.Id == command.WorkOrderId, ct);
 
         if (workOrder is null)
         {
-            _logger.LogError("WorkOrder with Id '{WorkOrderId}' does not exist.", command.WorkOrderId);
+            logger.LogError("WorkOrder with Id '{WorkOrderId}' does not exist.", command.WorkOrderId);
 
             return ApplicationErrors.WorkOrderNotFound;
         }
 
-        if (workOrder.StartAtUtc > _dateTime.GetUtcNow())
+        if (workOrder.StartAtUtc > dateTime.GetUtcNow())
         {
-            _logger.LogError("State transition for WorkOrder Id '{WorkOrderId}` is not allowed before the work order�s scheduled start time.", command.WorkOrderId);
+            logger.LogError("State transition for WorkOrder Id '{WorkOrderId}` is not allowed before the work order�s scheduled start time.", command.WorkOrderId);
 
             return WorkOrderErrors.StateTransitionNotAllowed(workOrder.StartAtUtc);
         }
@@ -49,7 +44,7 @@ public class UpdateWorkOrderStateCommandHandler(
 
         if (updateStatusResult.IsError)
         {
-            _logger.LogError("Failed to update status: {Error}", updateStatusResult.TopError.Description);
+            logger.LogError("Failed to update status: {Error}", updateStatusResult.TopError.Description);
 
             return updateStatusResult.Errors;
         }
@@ -59,11 +54,11 @@ public class UpdateWorkOrderStateCommandHandler(
             workOrder.AddDomainEvent(new WorkOrderCompleted { WorkOrderId = command.WorkOrderId });
         }
 
-        await _context.SaveChangesAsync(ct);
+        await context.SaveChangesAsync(ct);
 
         workOrder.AddDomainEvent(new WorkOrderCollectionModified());
 
-        await _cache.RemoveByTagAsync("work-order", ct);
+        await cache.RemoveByTagAsync("work-order", ct);
 
         return Result.Updated;
     }

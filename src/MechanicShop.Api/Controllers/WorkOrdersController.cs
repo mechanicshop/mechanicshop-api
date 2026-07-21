@@ -21,15 +21,8 @@ namespace MechanicShop.Api.Controllers;
 [Route("api/v{version:apiVersion}/workorders")]
 [ApiVersion("1.0")]
 [Authorize]
-public class WorkOrdersController : ApiController
+public class WorkOrdersController(ISender sender) : ApiController
 {
-    private readonly ISender _sender;
-
-    public WorkOrdersController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpGet]
     public async Task<ActionResult> GetWorkOrders(
         [AsParameters] WorkOrderFilterRequest filterRequest,
@@ -59,17 +52,17 @@ public class WorkOrdersController : ApiController
             filterRequest.EndDate,
             filterRequest.Spot is not null ? (Spot)(int)filterRequest.Spot : null);
 
-        var result = await _sender.Send(query, ct);
+        var result = await sender.Send(query, ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     [HttpGet("{workOrderId:guid}")]
     public async Task<ActionResult> GetWorkOrderById(Guid workOrderId, CancellationToken ct)
     {
-        var result = await _sender.Send(new GetWorkOrderByIdQuery(workOrderId), ct);
+        var result = await sender.Send(new GetWorkOrderByIdQuery(workOrderId), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     [HttpPost]
@@ -83,9 +76,9 @@ public class WorkOrdersController : ApiController
             request.RepairTaskIds,
             request.LaborId);
 
-        var result = await _sender.Send(command, ct);
+        var result = await sender.Send(command, ct);
 
-        return result.Match<ActionResult>(
+        return result.Match(
             wo => CreatedAtRoute("GetWorkOrderById", new { wo.WorkOrderId }, wo),
             Problem);
     }
@@ -94,9 +87,9 @@ public class WorkOrdersController : ApiController
     [Authorize("ManagerOnly")]
     public async Task<ActionResult> DeleteWorkOrder(Guid workOrderId, CancellationToken ct)
     {
-        var result = await _sender.Send(new DeleteWorkOrderCommand(workOrderId), ct);
+        var result = await sender.Send(new DeleteWorkOrderCommand(workOrderId), ct);
 
-        return result.Match<ActionResult>(_ => NoContent(), Problem);
+        return result.Match(_ => NoContent(), Problem);
     }
 
     [HttpPut("{workOrderId:guid}/labor")]
@@ -105,9 +98,9 @@ public class WorkOrdersController : ApiController
     {
         var command = new AssignLaborCommand(workOrderId, Guid.Parse(request.LaborId));
 
-        var result = await _sender.Send(command, ct);
+        var result = await sender.Send(command, ct);
 
-        return result.Match<ActionResult>(_ => NoContent(), Problem);
+        return result.Match(_ => NoContent(), Problem);
     }
 
     [HttpPut("{workOrderId:guid}/relocation")]
@@ -119,9 +112,9 @@ public class WorkOrdersController : ApiController
             request.NewStartAtUtc,
             (Spot)(int)request.NewSpot);
 
-        var result = await _sender.Send(command, ct);
+        var result = await sender.Send(command, ct);
 
-        return result.Match<ActionResult>(_ => NoContent(), Problem);
+        return result.Match(_ => NoContent(), Problem);
     }
 
     [HttpPut("{workOrderId:guid}/state")]
@@ -130,9 +123,9 @@ public class WorkOrdersController : ApiController
     {
         var command = new UpdateWorkOrderStateCommand(workOrderId, request.State);
 
-        var result = await _sender.Send(command, ct);
+        var result = await sender.Send(command, ct);
 
-        return result.Match<ActionResult>(_ => NoContent(), Problem);
+        return result.Match(_ => NoContent(), Problem);
     }
 
     [HttpPut("{workOrderId:guid}/repair-task")]
@@ -141,8 +134,8 @@ public class WorkOrdersController : ApiController
     {
         var command = new UpdateWorkOrderRepairTasksCommand(workOrderId, request.RepairTaskIds);
 
-        var result = await _sender.Send(command, ct);
+        var result = await sender.Send(command, ct);
 
-        return result.Match<ActionResult>(_ => NoContent(), Problem);
+        return result.Match(_ => NoContent(), Problem);
     }
 }

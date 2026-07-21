@@ -18,29 +18,22 @@ namespace MechanicShop.Api.Controllers;
 [Route("api/v{version:apiVersion}/repair-tasks")]
 [ApiVersion("1.0")]
 [Authorize]
-public class RepairTasksController : ApiController
+public class RepairTasksController(ISender sender) : ApiController
 {
-    private readonly ISender _sender;
-
-    public RepairTasksController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpGet]
     public async Task<ActionResult> GetRepairTasks(CancellationToken ct)
     {
-        var result = await _sender.Send(new GetRepairTasksQuery(), ct);
+        var result = await sender.Send(new GetRepairTasksQuery(), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     [HttpGet("{repairTaskId:guid}")]
     public async Task<ActionResult> GetRepairTaskById(Guid repairTaskId, CancellationToken ct)
     {
-        var result = await _sender.Send(new GetRepairTaskByIdQuery(repairTaskId), ct);
+        var result = await sender.Send(new GetRepairTaskByIdQuery(repairTaskId), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     [HttpPost]
@@ -52,9 +45,9 @@ public class RepairTasksController : ApiController
 
         var command = new CreateRepairTaskCommand(request.Name, request.LaborCost, request.EstimatedDurationInMins, parts);
 
-        var result = await _sender.Send(command, ct);
+        var result = await sender.Send(command, ct);
 
-        return result.Match<ActionResult>(
+        return result.Match(
             r => CreatedAtRoute("GetRepairTaskById", new { version = "1.0", repairTaskId = r.RepairTaskId }, r),
             Problem);
     }
@@ -68,17 +61,17 @@ public class RepairTasksController : ApiController
 
         var command = new UpdateRepairTaskCommand(repairTaskId, request.Name, request.LaborCost, request.EstimatedDurationInMins, parts);
 
-        var result = await _sender.Send(command, ct);
+        var result = await sender.Send(command, ct);
 
-        return result.Match<ActionResult>(value => Ok(value), Problem);
+        return result.Match(value => Ok(value), Problem);
     }
 
     [HttpDelete("{repairTaskId:guid}")]
     [Authorize(Roles = nameof(Role.Manager))]
     public async Task<ActionResult> RemoveRepairTask(Guid repairTaskId, CancellationToken ct)
     {
-        var result = await _sender.Send(new RemoveRepairTaskCommand(repairTaskId), ct);
+        var result = await sender.Send(new RemoveRepairTaskCommand(repairTaskId), ct);
 
-        return result.Match<ActionResult>(_ => NoContent(), Problem);
+        return result.Match(_ => NoContent(), Problem);
     }
 }
