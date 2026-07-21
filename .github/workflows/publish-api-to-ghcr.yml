@@ -3,13 +3,12 @@ name: Publish API to GHCR
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "**.md"
     paths:
       - 'src/MechanicShop.Api/**'
       - 'src/MechanicShop.Application/**'
       - 'src/MechanicShop.Domain/**'
       - 'src/MechanicShop.Infrastructure/**'
+      - '!src/**/*.md'
       - 'Directory.Build.props'
       - 'Directory.Packages.props'
       - '.github/workflows/publish-api-to-ghcr.yml'

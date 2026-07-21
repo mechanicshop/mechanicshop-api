@@ -77,18 +77,16 @@ public class RelocateWorkOrderCommandHandler(
 
         var updateSpotResult = workOrder.UpdateSpot(command.NewSpot);
 
-        if (updateTimingResult.IsError)
+        if (updateSpotResult.IsError)
         {
             logger.LogError("Failed to update Spot: {Error}", updateSpotResult.TopError.Description);
 
-            return updateTimingResult.Errors;
+            return updateSpotResult.Errors;
         }
 
         workOrder.AddDomainEvent(new WorkOrderCollectionModified());
 
         await context.SaveChangesAsync(ct);
-
-        workOrder.AddDomainEvent(new WorkOrderCollectionModified());
 
         await cache.RemoveByTagAsync("work-order", ct);
 

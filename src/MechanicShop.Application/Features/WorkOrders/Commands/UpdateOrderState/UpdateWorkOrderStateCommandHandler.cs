@@ -35,7 +35,7 @@ public class UpdateWorkOrderStateCommandHandler(
 
         if (workOrder.StartAtUtc > dateTime.GetUtcNow())
         {
-            logger.LogError("State transition for WorkOrder Id '{WorkOrderId}` is not allowed before the work order�s scheduled start time.", command.WorkOrderId);
+            logger.LogError("State transition for WorkOrder Id '{WorkOrderId}' is not allowed before the work order's scheduled start time.", command.WorkOrderId);
 
             return WorkOrderErrors.StateTransitionNotAllowed(workOrder.StartAtUtc);
         }

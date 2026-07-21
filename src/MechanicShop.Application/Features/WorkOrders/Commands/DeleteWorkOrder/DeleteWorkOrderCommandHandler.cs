@@ -36,7 +36,7 @@ public class DeleteWorkOrderCommandHandler(
         if (deleteResult.IsError)
         {
             logger.LogError(
-                "Deletion failed: only 'Scheduled' or 'Confirmed' WorkOrders can be deleted. Current status: {Status}",
+                "Deletion failed: only 'Scheduled' WorkOrders can be deleted. Current status: {Status}",
                 workOrder.State);
 
             return deleteResult.Errors;
