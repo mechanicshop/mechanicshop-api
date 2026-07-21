@@ -1,8 +1,6 @@
 using MechanicShop.Application.Common.Errors;
 using MechanicShop.Application.Common.Interfaces;
 using MechanicShop.Domain.Common.Results;
-using MechanicShop.Domain.Workorders;
-using MechanicShop.Domain.Workorders.Enums;
 using MechanicShop.Domain.Workorders.Events;
 
 using MediatR;
@@ -16,13 +14,15 @@ namespace MechanicShop.Application.Features.WorkOrders.Commands.DeleteWorkOrder;
 public class DeleteWorkOrderCommandHandler(
     ILogger<DeleteWorkOrderCommandHandler> logger,
     IAppDbContext context,
-    HybridCache cache
+    HybridCache cache,
+    TimeProvider dateTime
     )
     : IRequestHandler<DeleteWorkOrderCommand, Result<Deleted>>
 {
     private readonly ILogger<DeleteWorkOrderCommandHandler> _logger = logger;
     private readonly IAppDbContext _context = context;
     private readonly HybridCache _cache = cache;
+    private readonly TimeProvider _dateTime = dateTime;
 
     public async Task<Result<Deleted>> Handle(DeleteWorkOrderCommand command, CancellationToken ct)
     {
@@ -36,16 +36,16 @@ public class DeleteWorkOrderCommandHandler(
             return ApplicationErrors.WorkOrderNotFound;
         }
 
-        if (workOrder.State is not WorkOrderState.Scheduled)
+        var deleteResult = workOrder.Delete(_dateTime.GetUtcNow());
+
+        if (deleteResult.IsError)
         {
             _logger.LogError(
                 "Deletion failed: only 'Scheduled' or 'Confirmed' WorkOrders can be deleted. Current status: {Status}",
                 workOrder.State);
 
-            return WorkOrderErrors.Readonly;
+            return deleteResult.Errors;
         }
-
-        _context.WorkOrders.Remove(workOrder);
 
         await _context.SaveChangesAsync(ct);
 

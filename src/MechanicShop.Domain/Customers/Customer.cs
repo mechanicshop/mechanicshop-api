@@ -7,11 +7,13 @@ using MechanicShop.Domain.Customers.Vehicles;
 
 namespace MechanicShop.Domain.Customers;
 
-public sealed class Customer : AuditableEntity
+public sealed class Customer : AuditableEntity, ISoftDelete
 {
     public string? Name { get; private set; }
     public string? PhoneNumber { get; private set; }
     public string? Email { get; private set; }
+    public bool IsDeleted { get; set; }
+    public DateTimeOffset? DeletedAtUtc { get; set; }
 
     private readonly List<Vehicle> _vehicles = [];
     public IEnumerable<Vehicle> Vehicles => _vehicles.AsReadOnly();
@@ -104,5 +106,12 @@ public sealed class Customer : AuditableEntity
         }
 
         return Result.Updated;
+    }
+
+    public Result<Deleted> Delete(DateTimeOffset deletedAtUtc)
+    {
+        IsDeleted = true;
+        DeletedAtUtc = deletedAtUtc;
+        return Result.Deleted;
     }
 }

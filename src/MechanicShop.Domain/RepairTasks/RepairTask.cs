@@ -5,11 +5,13 @@ using MechanicShop.Domain.RepairTasks.Parts;
 
 namespace MechanicShop.Domain.RepairTasks;
 
-public sealed class RepairTask : AuditableEntity
+public sealed class RepairTask : AuditableEntity, ISoftDelete
 {
     public string Name { get; private set; }
     public decimal LaborCost { get; private set; }
     public RepairDurationInMinutes EstimatedDurationInMins { get; private set; }
+    public bool IsDeleted { get; set; }
+    public DateTimeOffset? DeletedAtUtc { get; set; }
 
     private readonly List<Part> _parts = [];
     public IEnumerable<Part> Parts => _parts.AsReadOnly();
@@ -97,5 +99,12 @@ public sealed class RepairTask : AuditableEntity
         EstimatedDurationInMins = estimatedDurationInMins;
 
         return Result.Updated;
+    }
+
+    public Result<Deleted> Delete(DateTimeOffset deletedAtUtc)
+    {
+        IsDeleted = true;
+        DeletedAtUtc = deletedAtUtc;
+        return Result.Deleted;
     }
 }

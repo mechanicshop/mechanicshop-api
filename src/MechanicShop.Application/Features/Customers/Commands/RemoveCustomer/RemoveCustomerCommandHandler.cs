@@ -14,7 +14,8 @@ namespace MechanicShop.Application.Features.Customers.Commands.RemoveCustomer;
 public class RemoveCustomerCommandHandler(
     ILogger<RemoveCustomerCommandHandler> logger,
     IAppDbContext context,
-    HybridCache cache
+    HybridCache cache,
+    TimeProvider dateTime
     )
     : IRequestHandler<RemoveCustomerCommand, Result<Deleted>>
 {
@@ -39,7 +40,7 @@ public class RemoveCustomerCommandHandler(
             return CustomerErrors.CannotDeleteCustomerWithWorkOrders;
         }
 
-        context.Customers.Remove(customer);
+        customer.Delete(dateTime.GetUtcNow());
 
         await context.SaveChangesAsync(ct);
 
