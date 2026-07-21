@@ -3,6 +3,8 @@ name: Publish Client to GHCR
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "**.md"
     paths:
       - 'src/MechanicsShop.Client/**'
       - '.github/workflows/publish-client-to-ghcr.yml'
