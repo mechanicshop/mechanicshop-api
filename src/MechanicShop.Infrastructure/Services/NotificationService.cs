@@ -20,6 +20,7 @@ public sealed class NotificationService(ILogger<NotificationService> logger) : I
         logger.LogInformation("[Email] To: {Email} | Message: {Message}", maskedEmail, Message);
 
         // Simulated email send
+        ct.ThrowIfCancellationRequested();
         await Task.CompletedTask;
     }
 
@@ -34,6 +35,7 @@ public sealed class NotificationService(ILogger<NotificationService> logger) : I
         logger.LogInformation("[SMS] To: {Phone} | Message: {Message}", masked, Message);
 
         // Simulated SMS send
+        ct.ThrowIfCancellationRequested();
         await Task.CompletedTask;
     }
 }

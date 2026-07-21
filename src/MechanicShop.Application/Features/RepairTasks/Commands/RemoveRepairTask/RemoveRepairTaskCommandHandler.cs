@@ -14,7 +14,8 @@ namespace MechanicShop.Application.Features.RepairTasks.Commands.RemoveRepairTas
 public class RemoveRepairTaskCommandHandler(
     ILogger<RemoveRepairTaskCommandHandler> logger,
     IAppDbContext context,
-    HybridCache cache
+    HybridCache cache,
+    TimeProvider dateTime
     )
     : IRequestHandler<RemoveRepairTaskCommand, Result<Deleted>>
 {
@@ -40,7 +41,7 @@ public class RemoveRepairTaskCommandHandler(
             return RepairTaskErrors.InUse;
         }
 
-        context.RepairTasks.Remove(repairTask);
+        repairTask.Delete(dateTime.GetUtcNow());
         await context.SaveChangesAsync(ct);
 
         await cache.RemoveByTagAsync("repair-task", ct);

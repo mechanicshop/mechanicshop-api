@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+
 using MechanicShop.Application.Common.Interfaces;
 using MechanicShop.Domain.Common;
 using MechanicShop.Domain.Customers;
@@ -39,6 +41,22 @@ public class AppDbContext(DbContextOptions<AppDbContext> options, IMediator medi
     {
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+
+        foreach (var entityType in builder.Model.GetEntityTypes())
+        {
+            if (typeof(ISoftDelete).IsAssignableFrom(entityType.ClrType))
+            {
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+                var propertyAccess = Expression.Property(parameter, nameof(ISoftDelete.IsDeleted));
+                var notExpression = Expression.Not(propertyAccess);
+                var lambda = Expression.Lambda(notExpression, parameter);
+                builder.Entity(entityType.ClrType).HasQueryFilter(lambda);
+
+                builder.Entity(entityType.ClrType)
+                    .HasIndex(nameof(ISoftDelete.IsDeleted))
+                    .HasFilter($"\"{nameof(ISoftDelete.IsDeleted)}\" = false");
+            }
+        }
     }
 
     private async Task DispatchDomainEventsAsync(CancellationToken ct)

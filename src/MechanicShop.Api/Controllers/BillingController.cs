@@ -14,21 +14,14 @@ namespace MechanicShop.Api.Controllers;
 [Route("api/v{version:apiVersion}/invoices")]
 [ApiVersion("1.0")]
 [Authorize("ManagerOnly")]
-public class BillingController : ApiController
+public class BillingController(ISender sender) : ApiController
 {
-    private readonly ISender _sender;
-
-    public BillingController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpPost("workorders/{workOrderId:guid}")]
     public async Task<ActionResult> IssueInvoice(Guid workOrderId, CancellationToken ct)
     {
-        var result = await _sender.Send(new IssueInvoiceCommand(workOrderId), ct);
+        var result = await sender.Send(new IssueInvoiceCommand(workOrderId), ct);
 
-        return result.Match<ActionResult>(
+        return result.Match(
             invoice => Created($"/api/v1/invoices/{invoice.InvoiceId}", invoice),
             Problem);
     }
@@ -36,17 +29,17 @@ public class BillingController : ApiController
     [HttpGet("{invoiceId:guid}")]
     public async Task<ActionResult> GetInvoice(Guid invoiceId, CancellationToken ct)
     {
-        var result = await _sender.Send(new GetInvoiceByIdQuery(invoiceId), ct);
+        var result = await sender.Send(new GetInvoiceByIdQuery(invoiceId), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     [HttpGet("{invoiceId:guid}/pdf")]
     public async Task<ActionResult> GetInvoicePdf(Guid invoiceId, CancellationToken ct)
     {
-        var result = await _sender.Send(new GetInvoicePdfQuery(invoiceId), ct);
+        var result = await sender.Send(new GetInvoicePdfQuery(invoiceId), ct);
 
-        return result.Match<ActionResult>(
+        return result.Match(
             pdf => File(pdf.Content!, "application/pdf", pdf.FileName),
             Problem);
     }

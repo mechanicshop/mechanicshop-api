@@ -5,7 +5,7 @@ namespace MechanicShop.Domain.Customers.Vehicles;
 
 public sealed class Vehicle : AuditableEntity
 {
-    public Guid CustomerId { get; }
+    public Guid CustomerId { get; private set; }
     public string Make { get; private set; }
     public string Model { get; private set; }
     public int Year { get; private set; }

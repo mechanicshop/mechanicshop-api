@@ -21,14 +21,9 @@ public class CreateWorkOrderCommandHandler(
     )
     : IRequestHandler<CreateWorkOrderCommand, Result<WorkOrderDto>>
 {
-    private readonly ILogger<CreateWorkOrderCommandHandler> _logger = logger;
-    private readonly IAppDbContext _context = context;
-    private readonly HybridCache _cache = cache;
-    private readonly IWorkOrderPolicy _workOrderPolicy = workOrderValidator;
-
     public async Task<Result<WorkOrderDto>> Handle(CreateWorkOrderCommand command, CancellationToken ct)
     {
-        var repairTasks = await _context.RepairTasks
+        var repairTasks = await context.RepairTasks
             .Where(t => command.RepairTaskIds.Contains(t.Id))
             .ToListAsync(ct);
 
@@ -36,7 +31,7 @@ public class CreateWorkOrderCommandHandler(
         {
             var missingIds = command.RepairTaskIds.Except(repairTasks.Select(t => t.Id)).ToArray();
 
-            _logger.LogError("Some RepairTaskIds not found: {MissingIds}", string.Join(", ", missingIds));
+            logger.LogError("Some RepairTaskIds not found: {MissingIds}", string.Join(", ", missingIds));
 
             return ApplicationErrors.RepairTaskNotFound;
         }
@@ -44,23 +39,23 @@ public class CreateWorkOrderCommandHandler(
         var totalEstimatedDuration = TimeSpan.FromMinutes(repairTasks.Sum(r => (int)r.EstimatedDurationInMins));
         var endAt = command.StartAt.Add(totalEstimatedDuration);
 
-        if (_workOrderPolicy.IsOutsideOperatingHours(command.StartAt, totalEstimatedDuration))
+        if (workOrderValidator.IsOutsideOperatingHours(command.StartAt, totalEstimatedDuration))
         {
-            _logger.LogError("The WorkOrder time ({StartAt} ? {EndAt}) is outside of store operating hours.", command.StartAt, endAt);
+            logger.LogError("The WorkOrder time ({StartAt} ? {EndAt}) is outside of store operating hours.", command.StartAt, endAt);
 
             return ApplicationErrors.WorkOrderOutsideOperatingHour(command.StartAt, endAt);
         }
 
-        var checkMinRequirementResult = _workOrderPolicy.ValidateMinimumRequirement(command.StartAt, endAt);
+        var checkMinRequirementResult = workOrderValidator.ValidateMinimumRequirement(command.StartAt, endAt);
 
         if (checkMinRequirementResult.IsError)
         {
-            _logger.LogError("WorkOrder duration is shorter than the configured minimum.");
+            logger.LogError("WorkOrder duration is shorter than the configured minimum.");
 
             return checkMinRequirementResult.Errors;
         }
 
-        var checkSpotAvailabilityResult = await _workOrderPolicy.CheckSpotAvailabilityAsync(
+        var checkSpotAvailabilityResult = await workOrderValidator.CheckSpotAvailabilityAsync(
             command.Spot,
             command.StartAt,
             endAt,
@@ -69,28 +64,28 @@ public class CreateWorkOrderCommandHandler(
 
         if (checkSpotAvailabilityResult.IsError)
         {
-            _logger.LogError("Spot: {Spot} is not available.", command.Spot.ToString());
+            logger.LogError("Spot: {Spot} is not available.", command.Spot.ToString());
             return checkSpotAvailabilityResult.Errors;
         }
 
-        var vehicle = await _context.Vehicles.Include(v => v.Customer).FirstOrDefaultAsync(v => v.Id == command.VehicleId, cancellationToken: ct);
+        var vehicle = await context.Vehicles.Include(v => v.Customer).FirstOrDefaultAsync(v => v.Id == command.VehicleId, cancellationToken: ct);
 
         if (vehicle is null)
         {
-            _logger.LogError("Vehicle with Id '{VehicleId}' does not exist.", command.VehicleId);
+            logger.LogError("Vehicle with Id '{VehicleId}' does not exist.", command.VehicleId);
 
             return ApplicationErrors.VehicleNotFound;
         }
 
-        var labor = await _context.Employees.FindAsync([command.LaborId], ct);
+        var labor = await context.Employees.FindAsync([command.LaborId], ct);
 
         if (labor is null)
         {
-            _logger.LogError("Invalid LaborId: {LaborId}", command.LaborId.ToString());
+            logger.LogError("Invalid LaborId: {LaborId}", command.LaborId.ToString());
             return ApplicationErrors.LaborNotFound;
         }
 
-        var hasVehicleConflict = await _context.WorkOrders
+        var hasVehicleConflict = await context.WorkOrders
             .AnyAsync(
                 a =>
                 a.VehicleId == command.VehicleId &&
@@ -101,13 +96,13 @@ public class CreateWorkOrderCommandHandler(
 
         if (hasVehicleConflict)
         {
-            _logger.LogError("Vehicle with Id '{VehicleId}' already has an overlapping WorkOrder.", command.VehicleId);
+            logger.LogError("Vehicle with Id '{VehicleId}' already has an overlapping WorkOrder.", command.VehicleId);
             return Error.Conflict(
                 code: "Vehicle_Overlapping_WorkOrders",
                 description: "The vehicle already has an overlapping WorkOrder.");
         }
 
-        var isLaborOccupied = await _context.WorkOrders
+        var isLaborOccupied = await context.WorkOrders
             .AnyAsync(
                 a =>
                 a.LaborId == command.LaborId &&
@@ -117,7 +112,7 @@ public class CreateWorkOrderCommandHandler(
 
         if (isLaborOccupied)
         {
-            _logger.LogError("Labor with Id '{LaborId}' is already occupied during the requested time.", command.LaborId);
+            logger.LogError("Labor with Id '{LaborId}' is already occupied during the requested time.", command.LaborId);
             return Error.Conflict(
                 code: "Labor_Occupied",
                 description: "Labor is already occupied during the requested time.");
@@ -134,25 +129,25 @@ public class CreateWorkOrderCommandHandler(
 
         if (createWorkOrderResult.IsError)
         {
-            _logger.LogError("Failed to create WorkOrder: {Error}", createWorkOrderResult.TopError.Description);
+            logger.LogError("Failed to create WorkOrder: {Error}", createWorkOrderResult.TopError.Description);
 
             return createWorkOrderResult.Errors;
         }
 
         var workOrder = createWorkOrderResult.Value;
 
-        _context.WorkOrders.Add(workOrder);
+        context.WorkOrders.Add(workOrder);
 
         workOrder.AddDomainEvent(new WorkOrderCollectionModified());
 
-        await _context.SaveChangesAsync(ct);
+        await context.SaveChangesAsync(ct);
 
         workOrder.Vehicle = vehicle;
         workOrder.Labor = labor;
 
-        _logger.LogInformation("WorkOrder with Id '{WorkOrderId}' created successfully.", workOrder.Id);
+        logger.LogInformation("WorkOrder with Id '{WorkOrderId}' created successfully.", workOrder.Id);
 
-        await _cache.RemoveByTagAsync("work-order", ct);
+        await cache.RemoveByTagAsync("work-order", ct);
 
         return workOrder.ToDto();
     }

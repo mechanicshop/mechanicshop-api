@@ -8,7 +8,7 @@ using MechanicShop.Domain.Workorders.Enums;
 
 namespace MechanicShop.Domain.Workorders;
 
-public sealed class WorkOrder : AuditableEntity
+public sealed class WorkOrder : AuditableEntity, ISoftDelete
 {
     public Guid VehicleId { get; }
     public DateTimeOffset StartAtUtc { get; private set; }
@@ -16,6 +16,8 @@ public sealed class WorkOrder : AuditableEntity
     public Guid LaborId { get; private set; }
     public Spot Spot { get; private set; }
     public WorkOrderState State { get; private set; }
+    public bool IsDeleted { get; set; }
+    public DateTimeOffset? DeletedAtUtc { get; set; }
     public Employee? Labor { get; set; }
     public Vehicle? Vehicle { get; set; }
     public Invoice? Invoice { get; set; }
@@ -186,6 +188,18 @@ public sealed class WorkOrder : AuditableEntity
         Spot = newSpot;
 
         return Result.Updated;
+    }
+
+    public Result<Deleted> Delete(DateTimeOffset deletedAtUtc)
+    {
+        if (State is not WorkOrderState.Scheduled)
+        {
+            return WorkOrderErrors.Readonly;
+        }
+
+        IsDeleted = true;
+        DeletedAtUtc = deletedAtUtc;
+        return Result.Deleted;
     }
 
     private bool CanTransitionTo(WorkOrderState newStatus)

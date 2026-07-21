@@ -15,23 +15,16 @@ namespace MechanicShop.Api.Controllers;
 
 [Route("api/v{version:apiVersion}/identity")]
 [ApiVersion("1.0")]
-public class IdentityController : ApiController
+public class IdentityController(ISender sender) : ApiController
 {
-    private readonly ISender _sender;
-
-    public IdentityController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpPost("token/generate")]
     public async Task<ActionResult> GenerateToken(GenerateTokenQuery request, CancellationToken ct)
     {
         var httpContext = HttpContext;
 
-        var result = await _sender.Send(request, ct);
+        var result = await sender.Send(request, ct);
 
-        return result.Match<ActionResult>(
+        return result.Match(
             tokenResponse =>
             {
                 if (!string.IsNullOrEmpty(tokenResponse.RefreshToken))
@@ -55,9 +48,9 @@ public class IdentityController : ApiController
                 detail: "Refresh token is missing.");
         }
 
-        var result = await _sender.Send(new RefreshTokenQuery(refreshToken, request.ExpiredAccessToken), ct);
+        var result = await sender.Send(new RefreshTokenQuery(refreshToken, request.ExpiredAccessToken), ct);
 
-        return result.Match<ActionResult>(
+        return result.Match(
             tokenResponse =>
             {
                 if (!string.IsNullOrEmpty(tokenResponse.RefreshToken))
@@ -74,9 +67,9 @@ public class IdentityController : ApiController
     [Authorize]
     public async Task<ActionResult> GetCurrentUserClaims(IUser user, CancellationToken ct)
     {
-        var result = await _sender.Send(new GetUserByIdQuery(user.Id), ct);
+        var result = await sender.Send(new GetUserByIdQuery(user.Id), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 
     private static void AppendRefreshTokenCookie(HttpResponse response, string refreshToken, bool isHttps)

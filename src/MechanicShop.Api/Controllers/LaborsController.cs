@@ -13,20 +13,13 @@ namespace MechanicShop.Api.Controllers;
 [Route("api/v{version:apiVersion}/labors")]
 [ApiVersion("1.0")]
 [Authorize(Roles = nameof(Role.Manager))]
-public class LaborsController : ApiController
+public class LaborsController(ISender sender) : ApiController
 {
-    private readonly ISender _sender;
-
-    public LaborsController(ISender sender)
-    {
-        _sender = sender;
-    }
-
     [HttpGet]
     public async Task<ActionResult> GetLabors(CancellationToken ct)
     {
-        var result = await _sender.Send(new GetLaborsQuery(), ct);
+        var result = await sender.Send(new GetLaborsQuery(), ct);
 
-        return result.Match<ActionResult>(Ok, Problem);
+        return result.Match(Ok, Problem);
     }
 }

@@ -53,7 +53,4 @@ public static class WorkOrderErrors
         code: "WorkOrderErrors.RepairTaskAlreadyAdded",
         description: "Repair task already exists.");
 
-    public static Error InvalidStateTransitionTime => Error.Conflict(
-        code: "WorkOrderErrors.InvalidStateTransitionTime",
-        description: "State transition is not allowed before the work order’s scheduled start time.");
 }

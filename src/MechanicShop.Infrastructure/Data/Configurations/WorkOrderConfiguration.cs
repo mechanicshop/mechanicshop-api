@@ -44,10 +44,10 @@ public class WorkOrderConfiguration : IEntityTypeConfiguration<WorkOrder>
                .WithMany()
                .HasForeignKey(w => w.VehicleId);
 
-        builder.HasIndex(w => w.LaborId);
-        builder.HasIndex(w => w.VehicleId);
-        builder.HasIndex(w => w.State);
-        builder.HasIndex(a => new { a.StartAtUtc, a.EndAtUtc });
+        builder.HasIndex(w => w.LaborId).HasFilter("\"IsDeleted\" = false");
+        builder.HasIndex(w => w.VehicleId).HasFilter("\"IsDeleted\" = false");
+        builder.HasIndex(w => w.State).HasFilter("\"IsDeleted\" = false");
+        builder.HasIndex(a => new { a.StartAtUtc, a.EndAtUtc }).HasFilter("\"IsDeleted\" = false");
 
         builder.Property(w => w.Spot).HasConversion<string>().IsRequired();
     }
