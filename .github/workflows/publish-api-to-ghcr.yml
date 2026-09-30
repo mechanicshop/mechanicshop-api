@@ -3,8 +3,6 @@ name: Publish API to GHCR
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "**.md"
     paths:
       - 'src/MechanicShop.Api/**'
       - 'src/MechanicShop.Application/**'
