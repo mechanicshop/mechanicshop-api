@@ -41,8 +41,8 @@ jobs:
           file: src/MechanicShop.Api/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ env.REPO_LOWER }}/mechanic-shop-api:latest
-            ghcr.io/${{ env.REPO_LOWER }}/mechanic-shop-api:${{ github.sha }}
+            ghcr.io/mechanicshop/mechanic-shop-api:latest
+            ghcr.io/mechanicshop/mechanic-shop-api:${{ github.sha }}
 
       - name: Log in to Azure (OIDC)
         uses: azure/login@v2
@@ -56,4 +56,4 @@ jobs:
         with:
           containerAppName: mechanic-shop-api
           resourceGroup: mechanic-shop-rg
-          imageToDeploy: ghcr.io/${{ env.REPO_LOWER }}/mechanic-shop-api:${{ github.sha }}
+          imageToDeploy: ghcr.io/mechanicshop/mechanic-shop-api:${{ github.sha }}
