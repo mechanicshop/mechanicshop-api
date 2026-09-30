@@ -1,13 +1,3 @@
-resource "azurerm_resource_group" "app_rg" {
-  name     = "mechanic-shop-rg"
-  location = "swedencentral"
-}
-
-data "azurerm_container_app_environment" "existing" {
-  name                = "quiznova-env"
-  resource_group_name = "quiz-nova-resource-group"
-}
-
 resource "azurerm_container_app" "api" {
   name                         = "mechanic-shop-api"
   container_app_environment_id = data.azurerm_container_app_environment.existing.id
@@ -17,12 +7,12 @@ resource "azurerm_container_app" "api" {
 
   secret {
     name  = "ghcr-pull-secret"
-    value = var.github_token
+    value = local.github_token
   }
 
   registry {
     server               = "ghcr.io"
-    username             = "MoamenElbarqy"
+    username             = "moamenelbarky"
     password_secret_name = "ghcr-pull-secret"
   }
 
@@ -32,7 +22,7 @@ resource "azurerm_container_app" "api" {
 
     container {
       name   = "mechanic-shop-api"
-      image  = "ghcr.io/moamenelbarqy/mechanic-shop/mechanic-shop-api:latest"
+      image  = "ghcr.io/mechanicshop/mechanic-shop-api:latest"
       cpu    = "0.5"
       memory = "1Gi"
 
@@ -46,11 +36,11 @@ resource "azurerm_container_app" "api" {
       }
       env {
         name  = "ConnectionStrings__DefaultConnection"
-        value = var.db_connection_string
+        value = local.db_connection_string
       }
       env {
         name  = "JwtSettings__Secret"
-        value = var.jwt_secret
+        value = local.jwt_secret
       }
       env {
         name  = "JwtSettings__Issuer"
@@ -74,7 +64,7 @@ resource "azurerm_container_app" "api" {
       }
       env {
         name  = "SERILOG__WRITETO__1__ARGS__URI"
-        value = var.grafana_loki_uri
+        value = local.grafana_loki_uri
       }
       env {
         name  = "SERILOG__WRITETO__1__ARGS__LABELS__0__KEY"
@@ -94,11 +84,11 @@ resource "azurerm_container_app" "api" {
       }
       env {
         name  = "SERILOG__WRITETO__1__ARGS__CREDENTIALS__LOGIN"
-        value = var.grafana_loki_user
+        value = local.grafana_loki_user
       }
       env {
         name  = "SERILOG__WRITETO__1__ARGS__CREDENTIALS__PASSWORD"
-        value = var.grafana_loki_password
+        value = local.grafana_loki_password
       }
       env {
         name  = "SERILOG__WRITETO__1__ARGS__PERIOD"
@@ -142,12 +132,12 @@ resource "azurerm_container_app" "client" {
 
   secret {
     name  = "ghcr-pull-secret"
-    value = var.github_token
+    value = local.github_token
   }
 
   registry {
     server               = "ghcr.io"
-    username             = "MoamenElbarqy"
+    username             = "moamenelbarky"
     password_secret_name = "ghcr-pull-secret"
   }
 
@@ -157,7 +147,7 @@ resource "azurerm_container_app" "client" {
 
     container {
       name   = "mechanic-shop-client"
-      image  = "ghcr.io/moamenelbarqy/mechanic-shop/mechanic-shop-client:latest"
+      image  = "ghcr.io/mechanicshop/mechanic-shop-client:latest"
       cpu    = "0.5"
       memory = "1Gi"
 

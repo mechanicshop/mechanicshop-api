@@ -1,0 +1,17 @@
+azure_subscription_id = "83ab56f5-88ee-436d-87a5-994d3185bf00"
+github_owner          = "mechanicshop"
+api_repository_name   = "mechanicshop-api"
+web_repository_name   = "mechanicshop-web"
+git_branch            = "main"
+
+# Optional: If not using Doppler data source directly, secrets can be provided here:
+db_connection_string  = "Host=ep-xxx.eu-central-1.aws.neon.tech;Database=neondb;Username=xxx;Password=xxx;SSL Mode=Require;Trust Server Certificate=true"
+jwt_secret            = "your-jwt-secret-here"
+grafana_loki_uri      = "https://logs-prod-012.grafana.net"
+grafana_loki_user     = "1640218"
+grafana_loki_password = "your-grafana-loki-password"
+github_token          = "ghp_your-github-pat"
+
+# Doppler Project Settings:
+doppler_project       = "mechanicshop-api"
+doppler_config        = "prd"
