@@ -8,11 +8,6 @@ output "api_fqdn" {
   value       = azurerm_container_app.api.ingress[0].fqdn
 }
 
-output "client_fqdn" {
-  description = "FQDN of the Client Container App"
-  value       = azurerm_container_app.client.ingress[0].fqdn
-}
-
 output "azure_ad_client_id" {
   description = "Client ID / AppId of the Azure AD Application for GitHub Actions"
   value       = azuread_application.mechanicshop_app.client_id

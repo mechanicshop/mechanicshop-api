@@ -16,12 +16,6 @@ variable "api_repository_name" {
   default     = "mechanicshop-api"
 }
 
-variable "web_repository_name" {
-  type        = string
-  description = "Frontend repository name"
-  default     = "mechanicshop-web"
-}
-
 variable "git_branch" {
   type        = string
   description = "Target deployment branch for OIDC federated credentials"
@@ -85,4 +79,10 @@ variable "doppler_config" {
   type        = string
   description = "Doppler Config / Environment Name"
   default     = "prd"
+}
+
+variable "use_doppler" {
+  type        = bool
+  description = "Set to true to fetch secrets dynamically from Doppler"
+  default     = true
 }
