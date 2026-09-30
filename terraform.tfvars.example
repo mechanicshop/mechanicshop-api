@@ -1,7 +1,0 @@
-subscription_id       = "00000000-0000-0000-0000-000000000000"
-db_connection_string = "Host=ep-xxx.eu-central-1.aws.neon.tech;Database=MechanicShopDb;Username=xxx;Password=xxx;SSL Mode=Require;Trust Server Certificate=true"
-jwt_secret          = "your-jwt-secret-here"
-grafana_loki_uri    = "https://logs-prod-xxx.grafana.net/loki/api/v1/push"
-grafana_loki_user   = "123456"
-grafana_loki_password = "your-loki-password"
-github_token          = "ghp_your-github-classic-pat"

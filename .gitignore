@@ -115,7 +115,10 @@ skills-lock.json
 # ------------------------------
 # Terraform
 # ------------------------------
-.terraform/
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.*
+**/terraform.tfvars
 *.tfstate
 *.tfstate.*
 terraform.tfvars
